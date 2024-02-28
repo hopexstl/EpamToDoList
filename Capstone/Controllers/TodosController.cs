@@ -16,7 +16,7 @@ public class TodosController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Todo>> Get()
+    public ActionResult<IEnumerable<TodoList>> Get()
     {
         var todos = _todoService.Get();
 
@@ -24,7 +24,7 @@ public class TodosController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Todo> GetById(int id)
+    public ActionResult<TodoList> GetById(int id)
     {
         var todo = _todoService.GetById(id);
 
@@ -37,14 +37,14 @@ public class TodosController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Create(Todo todo)
+    public ActionResult Create(TodoList todo)
     {
         _todoService.Create(todo);
         return NoContent();
     }
 
     [HttpPut]
-    public ActionResult Update(Todo todo)
+    public ActionResult Update(TodoList todo)
     {
         _todoService.Update(todo);
         return NoContent();
