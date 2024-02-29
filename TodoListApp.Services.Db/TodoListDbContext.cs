@@ -4,11 +4,11 @@ namespace TodoListApp.Services.Db
 {
     public class TodoListDbContext : DbContext
     {
-        public DbSet<TodoListEntity> Entities { get; set; }
+        public DbSet<TodoListEntity> TodoList { get; set; }
 
-        public TodoListDbContext(DbContextOptions options) : base(options)
+        public TodoListDbContext(DbContextOptions<TodoListDbContext> options)
+            : base(options)
         {
-            
         }
     }
 }
