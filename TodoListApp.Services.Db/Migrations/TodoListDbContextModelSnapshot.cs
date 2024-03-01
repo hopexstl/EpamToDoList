@@ -35,7 +35,7 @@ namespace TodoListApp.Services.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoList");
+                    b.ToTable("TodoList", (string)null);
                 });
 #pragma warning restore 612, 618
         }
