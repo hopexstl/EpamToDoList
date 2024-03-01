@@ -17,5 +17,26 @@ namespace Capstone.Services.Interfaces
         /// <param name="item">The todo item to add. The item should contain all necessary information such as title and, optionally, a description.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains no return value.</returns>
         Task AddTodoItem(TodoList item);
+
+        /// <summary>
+        /// Removes a todo item from the database.
+        /// </summary>
+        /// <param name="itemId">The ID of the todo item to be removed.</param>
+        /// <exception cref="KeyNotFoundException">
+        /// Thrown when a todo item with the specified ID is not found in the database.
+        /// </exception>
+        /// <returns>A task that represents the asynchronous operation. The task result contains no return value.</returns>
+        Task RemoveTodoItem(int itemId);
+
+        /// <summary>
+        /// Updates an existing todo item in the database with new values.
+        /// </summary>
+        /// <param name="itemId">The ID of the todo item to be updated.</param>
+        /// <param name="item">The updated todo item object containing the new values.</param>
+        /// <exception cref="KeyNotFoundException">
+        /// Thrown when a todo item with the specified ID is not found in the database.
+        /// </exception>
+        /// <returns>A task that represents the asynchronous operation. The task result contains no return value.</returns>
+        Task UpdateTodoItem(int itemId, TodoList item);
     }
 }

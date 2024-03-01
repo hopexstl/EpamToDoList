@@ -34,5 +34,49 @@ namespace TodoListApp.Services.Db.Services
             await this.context.TodoList.AddAsync(entity);
             await this.context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Asynchronously removes a Todo item from the database based on the specified item identifier.
+        /// </summary>
+        /// <param name="itemId">The unique identifier of the Todo item to be removed.</param>
+        /// <returns>A task that represents the asynchronous remove operation.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown if a Todo item with the specified identifier is not found.</exception>
+        public async Task RemoveTodoItem(int itemId)
+        {
+            var entity = await this.context.TodoList.FindAsync(itemId);
+
+            if (entity != null)
+            {
+                this.context.TodoList.Remove(entity);
+                await this.context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Todo item with Id {itemId} not found.");
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously updates an existing Todo item in the database with new values.
+        /// </summary>
+        /// <param name="itemId">The unique identifier of the Todo item to be updated.</param>
+        /// <param name="updatedItem">The new values for the Todo item. The Id property is ignored if supplied.</param>
+        /// <returns>A task that represents the asynchronous update operation.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown if a Todo item with the specified identifier is not found.</exception>
+        public async Task UpdateTodoItem(int itemId, TodoList updatedItem)
+        {
+            var entity = await this.context.TodoList.FindAsync(itemId);
+
+            if (entity != null)
+            {
+                entity.Title = updatedItem.Title;
+
+                await this.context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Todo item with Id {itemId} not found.");
+            }
+        }
     }
 }

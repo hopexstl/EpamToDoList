@@ -41,5 +41,54 @@ namespace Capstone.Api.Controllers
             await this.todoService.AddTodoItem(todo);
             return this.NoContent();
         }
+
+        /// <summary>
+        /// Deletes a TodoItem by its ID.
+        /// </summary>
+        /// <param name="itemId">The ID of the TodoItem to delete.</param>
+        /// <returns>
+        /// A NoContent result if the deletion is successful, or NotFound if a TodoItem with the specified ID does not exist.
+        /// </returns>
+        [HttpDelete("{itemId}")]
+        public async Task<IActionResult> DeleteTodoItem(int itemId)
+        {
+            try
+            {
+                await this.todoService.RemoveTodoItem(itemId);
+                return this.NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing TodoItem with the specified ID.
+        /// </summary>
+        /// <param name="itemId">The ID of the TodoItem to update.</param>
+        /// <param name="updatedItem">The updated TodoItem information.</param>
+        /// <returns>
+        /// A NoContent result if the update is successful, BadRequest if the updatedItem is null,
+        /// or NotFound if a TodoItem with the specified ID does not exist.
+        /// </returns>
+        [HttpPut("{itemId}")]
+        public async Task<IActionResult> UpdateTodoItem(int itemId, [FromBody] TodoList updatedItem)
+        {
+            if (updatedItem == null)
+            {
+                return this.BadRequest("Invalid request body.");
+            }
+
+            try
+            {
+                await this.todoService.UpdateTodoItem(itemId, updatedItem);
+                return this.NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
     }
 }
