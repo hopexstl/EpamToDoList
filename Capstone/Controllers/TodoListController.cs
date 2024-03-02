@@ -2,11 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace Capstone.Api.Controllers
+namespace TodoList.WebApi.Controllers
 {
     using Capstone.Services.Interfaces;
     using Microsoft.AspNetCore.Mvc;
-    using TodoListApp.Services.Models;
+    using TodoList.Services.Models.TodoList;
 
     /// <summary>
     /// Controller for managing todo items.

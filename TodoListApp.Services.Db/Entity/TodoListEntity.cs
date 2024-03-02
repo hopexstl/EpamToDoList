@@ -20,6 +20,11 @@ namespace TodoListApp.Services.Db.Entity
         /// <summary>
         /// Gets or sets the title of the Todo List item. This field represents the task or item to be completed.
         /// </summary>
-        public string Title { get; set; }
+        public string? Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Description of the Todo List item. This field represents the task or item to be completed.
+        /// </summary>
+        public string? Description { get; set; }
     }
 }

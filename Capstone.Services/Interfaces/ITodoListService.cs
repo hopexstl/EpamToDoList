@@ -4,7 +4,7 @@
 
 namespace Capstone.Services.Interfaces
 {
-    using TodoListApp.Services.Models;
+    using TodoList.Services.Models.TodoList;
 
     /// <summary>
     /// Defines the contract for a service that manages todo list items.
@@ -43,6 +43,6 @@ namespace Capstone.Services.Interfaces
         /// Asynchronously retrieves all todo lists.
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoList"/> instances.</returns>
-        Task<List<TodoList>> GetAllTodoLists();
+        Task<List<GetTodoList>> GetAllTodoLists();
     }
 }

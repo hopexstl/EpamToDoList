@@ -4,12 +4,6 @@
 
 namespace TodoListApp.WebApi.Models.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// Represents a user within the application. This class can be expanded to include additional user-related properties such as name, email, etc.
     /// </summary>

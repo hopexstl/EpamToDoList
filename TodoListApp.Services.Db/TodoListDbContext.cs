@@ -5,6 +5,7 @@
 namespace TodoListApp.Services.Db
 {
     using Microsoft.EntityFrameworkCore;
+    using TodoList.Services.Db.Entity;
     using TodoListApp.Services.Db.Entity;
 
     /// <summary>
@@ -26,6 +27,18 @@ namespace TodoListApp.Services.Db
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Todo List in the database.
         /// This property can be used to query and save instances of Todo List entities.
         /// </summary>
-        public DbSet<TodoListEntity> TodoList { get; set; }
+        public DbSet<TodoListEntity>? TodoList { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Task in the database.
+        /// This property can be used to query and save instances of Task entities.
+        /// </summary>
+        public DbSet<TaskEntity>? Task { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the User in the database.
+        /// This property can be used to query and save instances of User entities.
+        /// </summary>
+        public DbSet<UserEntity>? User { get; set; }
     }
 }

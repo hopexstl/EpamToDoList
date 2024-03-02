@@ -12,12 +12,12 @@ namespace TodoListApp.WebApi.Models.Models
         /// <summary>
         /// Gets or sets the title of the task.
         /// </summary>
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Gets or sets a detailed description of the task.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time when the task was created.

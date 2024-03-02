@@ -6,8 +6,8 @@ namespace TodoListApp.Services.Db.Services
 {
     using Capstone.Services.Interfaces;
     using Microsoft.EntityFrameworkCore;
+    using TodoList.Services.Models.TodoList;
     using TodoListApp.Services.Db.Entity;
-    using TodoListApp.Services.Models;
 
     /// <summary>
     /// Provides services for managing todo items in a database.
@@ -33,13 +33,14 @@ namespace TodoListApp.Services.Db.Services
         /// and returns a list of these models. Each model includes the Id and Title of the todo list.
         /// </remarks>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoList"/> models.</returns>
-        public async Task<List<TodoList>> GetAllTodoLists()
+        public async Task<List<GetTodoList>> GetAllTodoLists()
         {
-            var entities = await this.context.TodoList.ToListAsync();
-            var models = entities.Select(e => new TodoList
+            var entities = await this.context!.TodoList!.ToListAsync();
+            var models = entities.Select(e => new GetTodoList
             {
                 Id = e.Id,
                 Title = e.Title,
+                Description = e.Description,
             }).ToList();
 
             return models;
@@ -51,8 +52,9 @@ namespace TodoListApp.Services.Db.Services
             var entity = new TodoListEntity
             {
                 Title = item.Title,
+                Description = item.Description,
             };
-            await this.context.TodoList.AddAsync(entity);
+            await this.context!.TodoList!.AddAsync(entity);
             await this.context.SaveChangesAsync();
         }
 
@@ -64,7 +66,7 @@ namespace TodoListApp.Services.Db.Services
         /// <exception cref="KeyNotFoundException">Thrown if a Todo item with the specified identifier is not found.</exception>
         public async Task RemoveTodoItem(int itemId)
         {
-            var entity = await this.context.TodoList.FindAsync(itemId);
+            var entity = await this.context!.TodoList!.FindAsync(itemId);
 
             if (entity != null)
             {
@@ -86,11 +88,12 @@ namespace TodoListApp.Services.Db.Services
         /// <exception cref="KeyNotFoundException">Thrown if a Todo item with the specified identifier is not found.</exception>
         public async Task UpdateTodoItem(int itemId, TodoList updatedItem)
         {
-            var entity = await this.context.TodoList.FindAsync(itemId);
+            var entity = await this.context!.TodoList!.FindAsync(itemId);
 
             if (entity != null)
             {
                 entity.Title = updatedItem.Title;
+                entity.Description = updatedItem.Description;
 
                 await this.context.SaveChangesAsync();
             }

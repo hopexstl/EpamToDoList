@@ -4,6 +4,8 @@
 
 using Capstone.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using TodoList.Services.Db.Services;
+using TodoList.Services.Interfaces;
 using TodoListApp.Services.Db;
 using TodoListApp.Services.Db.Services;
 
@@ -26,6 +28,7 @@ builder.Services.AddDbContext<TodoListDbContext>(
 }, ServiceLifetime.Transient);
 
 builder.Services.AddTransient<ITodoListService, TodoListDatabaseService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 

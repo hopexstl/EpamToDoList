@@ -19,6 +19,6 @@ namespace TodoListApp.WebApi.Models.Models
         /// Gets or sets the tag text. This property represents a label or keyword associated with a task.
         /// </summary>
         /// <value>The text of the tag.</value>
-        public string Tag { get; set; }
+        public string? Tag { get; set; }
     }
 }

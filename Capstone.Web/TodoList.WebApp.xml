@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TodoList.WebApp</name>
+    </assembly>
+    <members>
+        <member name="T:Capstone.Web.Controllers.HomeController">
+            <summary>
+            Controller responsible for handling requests for the home page and related actions within the application.
+            </summary>
+        </member>
+        <member name="M:Capstone.Web.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{Capstone.Web.Controllers.HomeController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Capstone.Web.Controllers.HomeController"/> class.
+            </summary>
+            <param name="logger">The logger used for logging information and errors.</param>
+        </member>
+        <member name="M:Capstone.Web.Controllers.HomeController.Index">
+            <summary>
+            Serves the main index view of the application.
+            </summary>
+            <returns>The index view.</returns>
+        </member>
+        <member name="M:Capstone.Web.Controllers.HomeController.Privacy">
+            <summary>
+            Serves the privacy policy view of the application.
+            </summary>
+            <returns>The privacy view.</returns>
+        </member>
+        <member name="M:Capstone.Web.Controllers.HomeController.Error">
+            <summary>
+            Serves the error view in case of an application error. This action is decorated with <see cref="T:Microsoft.AspNetCore.Mvc.ResponseCacheAttribute"/>
+            to prevent caching of the error view.
+            </summary>
+            <returns>The error view populated with error details.</returns>
+        </member>
+        <member name="T:Capstone.Web.Models.ErrorViewModel">
+            <summary>
+            Represents the model for error information to be displayed in views. This model includes details about the error such as a request ID.
+            </summary>
+        </member>
+        <member name="P:Capstone.Web.Models.ErrorViewModel.RequestId">
+            <summary>
+            Gets or sets the unique identifier for the current HTTP request. This can be used to correlate the error with server logs.
+            </summary>
+            <value>The unique identifier of the HTTP request that resulted in an error.</value>
+        </member>
+        <member name="P:Capstone.Web.Models.ErrorViewModel.ShowRequestId">
+            <summary>
+            Gets a value indicating whether the request ID should be shown in the error view. This is determined based on the presence of a non-empty request ID.
+            </summary>
+            <value><c>true</c> if the request ID is not null or empty; otherwise, <c>false</c>.</value>
+        </member>
+    </members>
+</doc>
