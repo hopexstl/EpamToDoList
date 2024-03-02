@@ -27,6 +27,17 @@ namespace Capstone.Api.Controllers
         }
 
         /// <summary>
+        /// Retrieves all todo lists from the service.
+        /// </summary>
+        /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
+        [HttpGet]
+        public async Task<ActionResult<List<TodoList>>> GetAllTodoLists()
+        {
+            var todoLists = await this.todoService.GetAllTodoLists();
+            return this.Ok(todoLists);
+        }
+
+        /// <summary>
         /// Creates a new Todo List item.
         /// </summary>
         /// <param name="todo">The Todo List item to be created. This parameter is received from the request body.</param>

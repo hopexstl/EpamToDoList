@@ -5,6 +5,7 @@
 namespace TodoListApp.Services.Db.Services
 {
     using Capstone.Services.Interfaces;
+    using Microsoft.EntityFrameworkCore;
     using TodoListApp.Services.Db.Entity;
     using TodoListApp.Services.Models;
 
@@ -22,6 +23,26 @@ namespace TodoListApp.Services.Db.Services
         public TodoListDatabaseService(TodoListDbContext context)
         {
             this.context = context;
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves all todo lists from the database.
+        /// </summary>
+        /// <remarks>
+        /// This method fetches todo list entities from the database, converts them to the TodoList model,
+        /// and returns a list of these models. Each model includes the Id and Title of the todo list.
+        /// </remarks>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoList"/> models.</returns>
+        public async Task<List<TodoList>> GetAllTodoLists()
+        {
+            var entities = await this.context.TodoList.ToListAsync();
+            var models = entities.Select(e => new TodoList
+            {
+                Id = e.Id,
+                Title = e.Title,
+            }).ToList();
+
+            return models;
         }
 
         /// <inheritdoc/>

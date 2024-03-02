@@ -38,5 +38,11 @@ namespace Capstone.Services.Interfaces
         /// </exception>
         /// <returns>A task that represents the asynchronous operation. The task result contains no return value.</returns>
         Task UpdateTodoItem(int itemId, TodoList item);
+
+        /// <summary>
+        /// Asynchronously retrieves all todo lists.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoList"/> instances.</returns>
+        Task<List<TodoList>> GetAllTodoLists();
     }
 }
