@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 	</PropertyGroup>
 
@@ -15,8 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Capstone.Services\TodoListApp.Services.csproj" />
-		<ProjectReference Include="..\TodoListApp.Services.WebApi\TodoListApp.Services.WebApi.csproj" />
+		<ProjectReference Include="..\Capstone.Domain\TodoList.WebApi.Models.csproj" />
+		<ProjectReference Include="..\Capstone.Services\TodoList.Services.csproj" />
 	</ItemGroup>
 
 </Project>
