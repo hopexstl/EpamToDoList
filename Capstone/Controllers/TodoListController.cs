@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoController.cs" company="PlaceholderCompany">
+﻿// <copyright file="TodoListController.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -13,15 +13,15 @@ namespace Capstone.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoController : ControllerBase
+    public class TodoListController : ControllerBase
     {
         private readonly ITodoListService todoService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TodoController"/> class.
+        /// Initializes a new instance of the <see cref="TodoListController"/> class.
         /// </summary>
         /// <param name="todoService">The service for managing todo items.</param>
-        public TodoController(ITodoListService todoService)
+        public TodoListController(ITodoListService todoService)
         {
             this.todoService = todoService;
         }
