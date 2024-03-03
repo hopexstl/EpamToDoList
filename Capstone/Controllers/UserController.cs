@@ -4,6 +4,7 @@
 
 namespace TodoList.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TodoList.Services.Interfaces;
     using TodoList.Services.Models.User;
@@ -39,10 +40,23 @@ namespace TodoList.WebApi.Controllers
         }
 
         /// <summary>
+        /// login user in the system.
+        /// </summary>
+        /// <param name="user">The user details to be added.</param>
+        /// <returns>An <see cref="IActionResult"/> indicating the result of the create operation.</returns>
+        [HttpPost("Login")]
+        public async Task<IActionResult> UserLogin(Login user)
+        {
+            var login = await this.userService.Login(user);
+            return this.Ok(login);
+        }
+
+        /// <summary>
         /// Retrieves all users from the system.
         /// </summary>
         /// <returns>An <see cref="ActionResult"/> containing a list of users.</returns>
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<GetUsers>>> GetAllUsers()
         {
             var todoLists = await this.userService.GetAllUsers();

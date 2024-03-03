@@ -38,5 +38,12 @@ namespace TodoList.Services.Interfaces
         /// <param name="updatedItem">The user object containing the updated details of the user.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task UpdateUser(int userId, User updatedItem);
+
+        /// <summary>
+        /// logins existing user in the system.
+        /// </summary>
+        /// <param name="item">logins the user to the website and retrieves JwtToken.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        Task<string> Login(Login item);
     }
 }

@@ -32,5 +32,17 @@ namespace TodoList.Services.Db.Entity
         /// </summary>
         /// <value>The unique email of the user.</value>
         public string? Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unique password hash for the user. This password hash is typically used as the password  in the database.
+        /// </summary>
+        /// <value>The unique email of the user.</value>
+        public byte[] PasswordHash { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unique password salt for the user. This password salt is typically used as the password in the database.
+        /// </summary>
+        /// <value>The unique email of the user.</value>
+        public byte[] PasswordSalt { get; set; }
     }
 }
