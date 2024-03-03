@@ -4,7 +4,9 @@
 
 namespace TodoList.WebApi.Controllers
 {
+    using System.Security.Claims;
     using Capstone.Services.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TodoList.Services.Models.TodoList;
 
@@ -13,6 +15,7 @@ namespace TodoList.WebApi.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TodoListController : ControllerBase
     {
         private readonly ITodoListService todoService;
@@ -31,10 +34,17 @@ namespace TodoList.WebApi.Controllers
         /// </summary>
         /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
         [HttpGet]
-        public async Task<ActionResult<List<TodoList>>> GetAllTodoLists()
+        public async Task<ActionResult<List<TodoList>>> GetAllTodoListsByUserId()
         {
-            var todoLists = await this.todoService.GetAllTodoLists();
-            return this.Ok(todoLists);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            var todoListItems = await this.todoService.GetAllTodoListsByUserId(int.Parse(userId));
+            return this.Ok(todoListItems);
         }
 
         /// <summary>
@@ -94,7 +104,7 @@ namespace TodoList.WebApi.Controllers
             try
             {
                 await this.todoService.UpdateTodoItem(itemId, updatedItem);
-                return this.NoContent();
+                return this.Ok();
             }
             catch (KeyNotFoundException ex)
             {

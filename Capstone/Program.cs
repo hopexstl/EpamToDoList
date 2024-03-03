@@ -13,6 +13,7 @@ using TodoListApp.Services.Db;
 using TodoListApp.Services.Db.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
 IConfiguration configuration = builder.Configuration;
 
 // Add services to the container.
@@ -20,6 +21,7 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -49,6 +51,7 @@ builder.Services.AddSwaggerGen(options =>
         },
     });
 });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -60,6 +63,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false, // Set to true and specify `ValidAudience` if your app requires audience validation
         };
     });
+
 builder.Services.AddDbContext<TodoListDbContext>(
     options =>
 {
@@ -70,7 +74,10 @@ builder.Services.AddDbContext<TodoListDbContext>(
 }, ServiceLifetime.Transient);
 
 builder.Services.AddTransient<ITodoListService, TodoListDatabaseService>();
+
 builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddTransient<ITaskService, TaskService>();
 
 var app = builder.Build();
 
@@ -78,6 +85,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
+
     app.UseSwaggerUI();
 }
 

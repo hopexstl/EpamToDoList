@@ -10,6 +10,21 @@ namespace TodoList.Services.Models.User
     public class GetUsers
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetUsers"/> class.
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <param name="firstName">User First Name</param>
+        /// <param name="lastName">User Last Name</param>
+        /// <param name="email">User Email</param>
+        public GetUsers(int id, string? firstName, string? lastName, string? email)
+        {
+            this.Id = id;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Email = email;
+        }
+
+        /// <summary>
         /// Gets or sets the unique identifier for the user. This identifier is typically used as the primary key in the database.
         /// </summary>
         /// <value>The unique identifier of the user.</value>

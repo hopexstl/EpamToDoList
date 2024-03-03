@@ -27,18 +27,31 @@ namespace TodoListApp.Services.Db
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Todo List in the database.
         /// This property can be used to query and save instances of Todo List entities.
         /// </summary>
-        public DbSet<TodoListEntity>? TodoList { get; set; }
+        public DbSet<TodoListModel>? TodoList { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Task in the database.
         /// This property can be used to query and save instances of Task entities.
         /// </summary>
-        public DbSet<TaskEntity>? Task { get; set; }
+        public DbSet<TaskModel>? Tasks { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the User in the database.
         /// This property can be used to query and save instances of User entities.
         /// </summary>
-        public DbSet<UserEntity>? User { get; set; }
+        public DbSet<UserModel>? Users { get; set; }
+
+        /// <inheritdoc/>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configure the foreign key relationship between Tasks and Users
+            modelBuilder.Entity<TaskModel>()
+                .HasOne<UserModel>() // Assuming TaskModel has a navigation property to UserModel. Adjust if necessary.
+                .WithMany() // Assuming UserModel has a collection navigation property to TaskModel. Adjust if necessary.
+                .HasForeignKey(t => t.TaskAssigneeId) // Adjust the name if necessary.
+                .OnDelete(DeleteBehavior.Restrict); // This prevents cascade delete. Use DeleteBehavior.SetNull if you want to set the foreign key to null instead.
+        }
     }
 }

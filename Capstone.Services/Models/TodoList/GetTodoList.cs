@@ -10,6 +10,19 @@ namespace TodoList.Services.Models.TodoList
     public class GetTodoList
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GetTodoList"/> class.
+        /// </summary>
+        /// <param name="id">TodoList Id.</param>
+        /// <param name="title">TodoList Title.</param>
+        /// <param name="description">TodoList Description.</param>
+        public GetTodoList(int id, string? title, string? description)
+        {
+            this.Id = id;
+            this.Title = title;
+            this.Description = description;
+        }
+
+        /// <summary>
         /// Gets or sets the unique identifier for this entity.
         /// </summary>
         /// <value>The unique identifier, typically used as a primary key in the database.</value>

@@ -42,7 +42,7 @@ namespace TodoList.Services.Db.Services
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task CreateUser(User item)
         {
-            var emailExists = await this.context.User!.AnyAsync(x => x.Email == item.Email);
+            var emailExists = await this.context.Users!.AnyAsync(x => x.Email == item.Email);
             if (emailExists)
             {
                 throw new Exception("User with this email already exists");
@@ -50,15 +50,8 @@ namespace TodoList.Services.Db.Services
 
             this.CreatePasswordHash(item.Password!, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var entity = new UserEntity
-            {
-                FirstName = item.FirstName,
-                LastName = item.LastName,
-                Email = item.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-            };
-            await this.context!.User!.AddAsync(entity);
+            var user = new UserModel(item.FirstName, item.LastName, item.Email, passwordHash, passwordSalt);
+            await this.context!.Users!.AddAsync(user);
             await this.context.SaveChangesAsync();
         }
 
@@ -69,7 +62,7 @@ namespace TodoList.Services.Db.Services
         /// <returns>A task representing the asynchronous operation.</returns>
         public async Task<string> Login(Login item)
         {
-            var user = await this.context.User!.FirstOrDefaultAsync(x => x.Email == item.Email);
+            var user = await this.context.Users!.FirstOrDefaultAsync(x => x.Email == item.Email);
             if (user == null)
             {
                 throw new Exception("User with this email doesn't exist");
@@ -90,16 +83,11 @@ namespace TodoList.Services.Db.Services
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of users.</returns>
         public async Task<List<GetUsers>> GetAllUsers()
         {
-            var entities = await this.context!.User!.ToListAsync();
-            var models = entities.Select(e => new GetUsers
-            {
-                Id = e.Id,
-                FirstName = e.FirstName,
-                LastName = e.LastName,
-                Email = e.Email,
-            }).ToList();
+            var users = await this.context!.Users!.ToListAsync();
 
-            return models;
+            var usersReturnModel = users.Select(e => new GetUsers(e.Id, e.FirstName, e.LastName, e.Email)).ToList();
+
+            return usersReturnModel;
         }
 
         /// <summary>
@@ -110,11 +98,11 @@ namespace TodoList.Services.Db.Services
         /// <exception cref="KeyNotFoundException">Thrown when a user with the specified ID was not found.</exception>
         public async Task DeleteUser(int userId)
         {
-            var entity = await this.context!.User!.FindAsync(userId);
+            var user = await this.context!.Users!.FindAsync(userId);
 
-            if (entity != null)
+            if (user != null)
             {
-                this.context.User.Remove(entity);
+                this.context.Users.Remove(user);
                 await this.context.SaveChangesAsync();
             }
             else
@@ -132,13 +120,11 @@ namespace TodoList.Services.Db.Services
         /// <exception cref="KeyNotFoundException">Thrown when a user with the specified ID was not found.</exception>
         public async Task UpdateUser(int userId, User updatedItem)
         {
-            var entity = await this.context!.User!.FindAsync(userId);
+            var user = await this.context!.Users!.FindAsync(userId);
 
-            if (entity != null)
+            if (user != null)
             {
-                entity.FirstName = updatedItem.FirstName;
-                entity.LastName = updatedItem.LastName;
-                entity.Email = updatedItem.Email;
+                user.Update(updatedItem.FirstName, updatedItem.LastName, updatedItem.Email);
 
                 await this.context.SaveChangesAsync();
             }
@@ -184,10 +170,11 @@ namespace TodoList.Services.Db.Services
         /// Asynchronously creates JwtToken for user.
         /// </summary>
         /// <param name="user">The unique user.</param>
-        private string CreateToken(UserEntity user)
+        private string CreateToken(UserModel user)
         {
             List<Claim> claim = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString() !),
                 new Claim(ClaimTypes.Email, user.Email !),
             };
 

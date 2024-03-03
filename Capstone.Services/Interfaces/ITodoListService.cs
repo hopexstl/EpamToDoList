@@ -42,7 +42,8 @@ namespace Capstone.Services.Interfaces
         /// <summary>
         /// Asynchronously retrieves all todo lists.
         /// </summary>
+        /// <param name="userId">The ID of the todo item to be updated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoList"/> instances.</returns>
-        Task<List<GetTodoList>> GetAllTodoLists();
+        Task<List<GetTodoList>> GetAllTodoListsByUserId(int userId);
     }
 }

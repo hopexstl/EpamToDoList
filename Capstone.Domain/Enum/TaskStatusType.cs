@@ -1,4 +1,4 @@
-﻿// <copyright file="TaskStatus.cs" company="PlaceholderCompany">
+﻿// <copyright file="TaskStatusType.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -7,7 +7,7 @@ namespace TodoListApp.WebApi.Models.Enum;
 /// <summary>
 /// Defines the possible states of a task within the Todo List application.
 /// </summary>
-public enum TaskStatus
+public enum TaskStatusType
 {
     /// <summary>
     /// Indicates that the task has not yet been started.

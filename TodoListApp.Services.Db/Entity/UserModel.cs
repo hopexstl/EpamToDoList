@@ -7,8 +7,25 @@ namespace TodoList.Services.Db.Entity
     /// <summary>
     /// Represents a user within the application. This class can be expanded to include additional user-related properties such as name, email, etc.
     /// </summary>
-    public class UserEntity
+    public class UserModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserModel"/> class.
+        /// </summary>
+        /// <param name="firstName">First Name.</param>
+        /// <param name="lastName">Last Name.</param>
+        /// <param name="email">Email.</param>
+        /// <param name="passwordHash">Password Hash.</param>
+        /// <param name="passwordSalt">Password Salt.</param>
+        public UserModel(string? firstName, string? lastName, string? email, byte[] passwordHash, byte[] passwordSalt)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Email = email;
+            this.PasswordHash = passwordHash;
+            this.PasswordSalt = passwordSalt;
+        }
+
         /// <summary>
         /// Gets or sets the unique identifier for the user. This identifier is typically used as the primary key in the database.
         /// </summary>
@@ -44,5 +61,18 @@ namespace TodoList.Services.Db.Entity
         /// </summary>
         /// <value>The unique email of the user.</value>
         public byte[] PasswordSalt { get; set; }
+
+        /// <summary>
+        /// Updates user instance.
+        /// </summary>
+        /// <param name="firstName">First Name.</param>
+        /// <param name="lastName">Last Name.</param>
+        /// <param name="email">Email.</param>
+        public void Update(string? firstName, string? lastName, string? email)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Email = email;
+        }
     }
 }

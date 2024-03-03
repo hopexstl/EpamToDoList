@@ -9,11 +9,11 @@ using TodoListApp.Services.Db;
 
 #nullable disable
 
-namespace TodoListApp.Services.Db.Migrations
+namespace TodoList.Services.Db.Migrations
 {
     [DbContext(typeof(TodoListDbContext))]
-    [Migration("20240303111540_Added_Password_To_Users")]
-    partial class Added_Password_To_Users
+    [Migration("20240303162110_init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,13 +24,16 @@ namespace TodoListApp.Services.Db.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskEntity", b =>
+            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AssigneeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CreatedById")
                         .HasColumnType("int");
@@ -58,14 +61,18 @@ namespace TodoListApp.Services.Db.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AssigneeId");
+
+                    b.HasIndex("CreatedById");
+
                     b.HasIndex("TaskAssigneeId");
 
                     b.HasIndex("TodoListId");
 
-                    b.ToTable("Task");
+                    b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("TodoList.Services.Db.Entity.UserEntity", b =>
+            modelBuilder.Entity("TodoList.Services.Db.Entity.UserModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,10 +99,10 @@ namespace TodoListApp.Services.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListEntity", b =>
+            modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,23 +121,40 @@ namespace TodoListApp.Services.Db.Migrations
                     b.ToTable("TodoList");
                 });
 
-            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskEntity", b =>
+            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskModel", b =>
                 {
-                    b.HasOne("TodoList.Services.Db.Entity.UserEntity", "Assignee")
+                    b.HasOne("TodoList.Services.Db.Entity.UserModel", "Assignee")
                         .WithMany()
-                        .HasForeignKey("TaskAssigneeId")
+                        .HasForeignKey("AssigneeId");
+
+                    b.HasOne("TodoList.Services.Db.Entity.UserModel", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TodoListApp.Services.Db.Entity.TodoListEntity", "TodoList")
+                    b.HasOne("TodoList.Services.Db.Entity.UserModel", null)
                         .WithMany()
+                        .HasForeignKey("TaskAssigneeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TodoListApp.Services.Db.Entity.TodoListModel", "TodoList")
+                        .WithMany("Tasks")
                         .HasForeignKey("TodoListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Assignee");
 
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("TodoList");
+                });
+
+            modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListModel", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

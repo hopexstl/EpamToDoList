@@ -56,7 +56,6 @@ namespace TodoList.WebApi.Controllers
         /// </summary>
         /// <returns>An <see cref="ActionResult"/> containing a list of users.</returns>
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<List<GetUsers>>> GetAllUsers()
         {
             var todoLists = await this.userService.GetAllUsers();
@@ -89,7 +88,7 @@ namespace TodoList.WebApi.Controllers
         /// <param name="updatedItem">The new details for the user.</param>
         /// <returns>An <see cref="IActionResult"/> indicating the result of the update operation.</returns>
         [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateTodoItem(int userId, [FromBody] User updatedItem)
+        public async Task<IActionResult> UpdateUser(int userId, [FromBody] User updatedItem)
         {
             if (updatedItem == null)
             {
