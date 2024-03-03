@@ -2,11 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-
-
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using TodoList.Services.Interfaces;
 using TodoList.Services.Models.Task;
 using TodoListApp.WebApi.Models.Enum;
@@ -36,6 +34,7 @@ namespace TodoList.WebApi.Controllers
         /// <summary>
         /// Retrieves all todo lists from the service by user id.
         /// </summary>
+        /// <param name="model">model.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost(nameof(GetTasksByUserId))]
         public async Task<ActionResult<List<GetTasksModel>>> GetTasksByUserId([FromBody] FilterUserTaskModel model)

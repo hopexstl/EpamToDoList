@@ -5,6 +5,7 @@
 namespace TodoList.Services.Models.Task
 {
     using TodoListApp.WebApi.Models.Enum;
+
     /// <summary>
     /// Represents a single to-do item with a title and a description.
     /// </summary>
