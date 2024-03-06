@@ -30,9 +30,6 @@ namespace TodoList.Services.Db.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AssigneeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CreatedById")
                         .HasColumnType("int");
 
@@ -58,8 +55,6 @@ namespace TodoList.Services.Db.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssigneeId");
 
                     b.HasIndex("CreatedById");
 
@@ -121,20 +116,16 @@ namespace TodoList.Services.Db.Migrations
 
             modelBuilder.Entity("TodoList.Services.Db.Entity.TaskModel", b =>
                 {
-                    b.HasOne("TodoList.Services.Db.Entity.UserModel", "Assignee")
-                        .WithMany()
-                        .HasForeignKey("AssigneeId");
-
                     b.HasOne("TodoList.Services.Db.Entity.UserModel", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TodoList.Services.Db.Entity.UserModel", null)
+                    b.HasOne("TodoList.Services.Db.Entity.UserModel", "Assignee")
                         .WithMany()
                         .HasForeignKey("TaskAssigneeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("TodoListApp.Services.Db.Entity.TodoListModel", "TodoList")

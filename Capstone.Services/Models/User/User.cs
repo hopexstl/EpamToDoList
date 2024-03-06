@@ -13,7 +13,7 @@ namespace TodoList.Services.Models.User
         /// Gets or sets first name for the user. This first name is typically used as the primary key in the database.
         /// </summary>
         /// <value>The first name of the user.</value>
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// Gets or sets last name for the user. This last name is typically used as the primary key in the database.
@@ -31,6 +31,6 @@ namespace TodoList.Services.Models.User
         /// Gets or sets the unique password for the user. This password is typically used as the primary key in the database.
         /// </summary>
         /// <value>The unique password of the user.</value>
-        public string? Password { get; set; }
+        public string Password { get; set; }
     }
 }

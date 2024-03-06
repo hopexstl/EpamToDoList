@@ -13,13 +13,11 @@ namespace TodoList.Services.Models.Task
         /// Initializes a new instance of the <see cref="FilterUserTaskModel"/> class.
         /// </summary>
         /// <param name="title">Title.</param>
-        /// <param name="createdDate">Created Date.</param>
-        /// <param name="dueDate">Due Date.</param>
-        /// <param name="taskStatus">Task Status.</param>
-        public FilterUserTaskModel(string? title, byte? taskStatus)
+        /// <param name="status">Task Status.</param>
+        public FilterUserTaskModel(string? title, byte? status)
         {
             this.Title = title;
-            this.TaskStatus = taskStatus;
+            this.Status = status;
         }
 
         /// <summary>
@@ -28,8 +26,8 @@ namespace TodoList.Services.Models.Task
         public string? Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the current status of the task, represented as a <see cref="TaskStatus"/> enum value.
+        /// Gets or sets the current status of the task, represented as a <see cref="TaskStatusType"/> enum value.
         /// </summary>
-        public byte? TaskStatus { get; set; }
+        public byte? Status { get; set; }
     }
 }

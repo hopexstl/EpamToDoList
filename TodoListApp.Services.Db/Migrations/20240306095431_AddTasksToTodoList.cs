@@ -1,15 +1,12 @@
-﻿// <copyright file="20240303162110_init.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace TodoList.Services.Db.Migrations
 {
-    using Microsoft.EntityFrameworkCore.Migrations;
-
-    /// <inheritdoc/>
-    public partial class Init : Migration
+    public partial class AddTasksToTodoList : Migration
     {
-        /// <inheritdoc/>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -56,8 +53,7 @@ namespace TodoList.Services.Db.Migrations
                     TaskStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     TaskAssigneeId = table.Column<int>(type: "int", nullable: false),
-                    AssigneeId = table.Column<int>(type: "int", nullable: true),
-                    TodoListId = table.Column<int>(type: "int", nullable: false),
+                    TodoListId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,11 +65,6 @@ namespace TodoList.Services.Db.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tasks_Users_AssigneeId",
-                        column: x => x.AssigneeId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Tasks_Users_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "Users",
@@ -83,14 +74,8 @@ namespace TodoList.Services.Db.Migrations
                         name: "FK_Tasks_Users_TaskAssigneeId",
                         column: x => x.TaskAssigneeId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tasks_AssigneeId",
-                table: "Tasks",
-                column: "AssigneeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_CreatedById",
@@ -108,7 +93,6 @@ namespace TodoList.Services.Db.Migrations
                 column: "TodoListId");
         }
 
-        /// <inheritdoc/>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

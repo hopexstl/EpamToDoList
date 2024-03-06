@@ -40,7 +40,7 @@ namespace TodoList.Services.Db.Services
         {
             var task = await this.context!.Tasks!
                 .Where(x => x.Id == itemId)
-                .Select(x => new GetTaskByIdModel(x.Title, x.Description, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .Select(x => new GetTaskByIdModel(x.Title!, x.Description, x.CreatedDate, x.DueDate, x.TaskStatus))
                 .FirstOrDefaultAsync();
 
             if (task == null)
@@ -66,8 +66,8 @@ namespace TodoList.Services.Db.Services
             var task = await this.context!.Tasks!
                 .Where(x => x.TaskAssigneeId == userId)
                 .Where(x => string.IsNullOrWhiteSpace(model.Title) || x.Title!.ToLower().Contains(model.Title.ToLower()))
-                .Where(x => !model.TaskStatus.HasValue || x.TaskStatus.Equals((TaskStatusType)model.TaskStatus.Value))
-                .Select(x => new GetTasksModel(x.Title, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .Where(x => !model.Status.HasValue || x.TaskStatus.Equals((TaskStatusType)model.Status.Value))
+                .Select(x => new GetTasksModel(x.Title!, x.CreatedDate, x.DueDate, x.TaskStatus))
                 .ToListAsync();
 
             if (task == null)
@@ -91,7 +91,7 @@ namespace TodoList.Services.Db.Services
         {
             var task = await this.context!.Tasks!
                 .Where(x => x.TodoListId == todoListId)
-                .Select(x => new GetTasksModel(x.Title, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .Select(x => new GetTasksModel(x.Title!, x.CreatedDate, x.DueDate, x.TaskStatus))
                 .ToListAsync();
 
             if (task == null)
@@ -105,7 +105,7 @@ namespace TodoList.Services.Db.Services
         /// <inheritdoc/>
         public async Task AddTask(AddTaskModel item)
         {
-            var taskModel = new TaskModel(item.Title, item.Description, item.DueDate, item.TaskStatus, item.CreatedById, item.TaskAssigneeId, item.TodoListId);
+            var taskModel = new TaskModel(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
 
             await this.context!.Tasks!.AddAsync(taskModel);
             await this.context.SaveChangesAsync();
@@ -118,7 +118,7 @@ namespace TodoList.Services.Db.Services
 
             if (task != null)
             {
-                task.Update(item.Title, item.Description, item.DueDate, item.TaskStatus, item.TaskAssigneeId);
+                task.Update(item.Title, item.Description, item.DueDate, item.Status, item.Assignee);
 
                 await this.context.SaveChangesAsync();
             }

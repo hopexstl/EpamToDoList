@@ -46,12 +46,11 @@ namespace TodoListApp.Services.Db
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure the foreign key relationship between Tasks and Users
             modelBuilder.Entity<TaskModel>()
-                .HasOne<UserModel>() // Assuming TaskModel has a navigation property to UserModel. Adjust if necessary.
-                .WithMany() // Assuming UserModel has a collection navigation property to TaskModel. Adjust if necessary.
-                .HasForeignKey(t => t.TaskAssigneeId) // Adjust the name if necessary.
-                .OnDelete(DeleteBehavior.Restrict); // This prevents cascade delete. Use DeleteBehavior.SetNull if you want to set the foreign key to null instead.
+                        .HasOne(t => t.Assignee)
+                        .WithMany()
+                        .HasForeignKey(t => t.TaskAssigneeId)
+                        .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="UserEntity.cs" company="PlaceholderCompany">
+﻿// <copyright file="UserModel.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 

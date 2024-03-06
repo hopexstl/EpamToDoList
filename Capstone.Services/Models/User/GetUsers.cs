@@ -12,10 +12,10 @@ namespace TodoList.Services.Models.User
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUsers"/> class.
         /// </summary>
-        /// <param name="id">User Id</param>
-        /// <param name="firstName">User First Name</param>
-        /// <param name="lastName">User Last Name</param>
-        /// <param name="email">User Email</param>
+        /// <param name="id">User Id.</param>
+        /// <param name="firstName">User First Name.</param>
+        /// <param name="lastName">User Last Name.</param>
+        /// <param name="email">User Email.</param>
         public GetUsers(int id, string? firstName, string? lastName, string? email)
         {
             this.Id = id;

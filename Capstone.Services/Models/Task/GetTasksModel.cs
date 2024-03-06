@@ -17,20 +17,20 @@ namespace TodoList.Services.Models.Task
         /// <param name="title">Title.</param>
         /// <param name="createdDate">Created Date.</param>
         /// <param name="dueDate">Due Date.</param>
-        /// <param name="taskStatus">Task Status.</param>
-        public GetTasksModel(string? title, DateTime createdDate, DateTime dueDate, TaskStatusType taskStatus)
+        /// <param name="status">Task Status.</param>
+        public GetTasksModel(string title, DateTime createdDate, DateTime dueDate, TaskStatusType status)
         {
             this.Title = title;
             this.CreatedDate = createdDate;
             this.DueDate = dueDate;
-            this.TaskStatus = taskStatus;
+            this.Status = this.Status;
             this.IsOverdue = dueDate > DateTime.Now ? true : false;
         }
 
         /// <summary>
         /// Gets or sets the title of the task.
         /// </summary>
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time when the task was created.
@@ -45,7 +45,7 @@ namespace TodoList.Services.Models.Task
         /// <summary>
         /// Gets or sets the current status of the task, represented as a <see cref="TaskStatus"/> enum value.
         /// </summary>
-        public TaskStatusType TaskStatus { get; set; }
+        public TaskStatusType Status { get; set; }
 
         /// <summary>
         /// Gets or sets a assignee email of the task.

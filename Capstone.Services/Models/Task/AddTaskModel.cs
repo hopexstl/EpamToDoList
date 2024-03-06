@@ -32,15 +32,15 @@ namespace TodoList.Services.Models.Task
         public DateTime DueDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the current status of the task, represented as a <see cref="TaskStatus"/> enum value.
+        /// Gets or sets the current status of the task, represented as a <see cref="TaskStatusType"/> enum value.
         /// </summary>
-        public TaskStatusType TaskStatus { get; set; }
+        public TaskStatusType Status { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user to whom the task is assigned.
         /// This property acts as a foreign key referencing the UserEntity.
         /// </summary>
-        public int TaskAssigneeId { get; set; }
+        public int Assignee { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user to whom the task is assigned.
@@ -51,7 +51,7 @@ namespace TodoList.Services.Models.Task
         /// <summary>
         /// Gets the identifier of the user who created the task.
         /// </summary>
-        public int CreatedById { get; private set; }
+        public int CreatedBy { get; private set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user who created the task.
@@ -59,7 +59,7 @@ namespace TodoList.Services.Models.Task
         /// <param name="userId">The Todo List item to be created. This parameter is received from the request body.</param>
         public void AddUserId(int userId)
         {
-            this.CreatedById = userId;
+            this.CreatedBy = userId;
         }
     }
 }

@@ -4,6 +4,8 @@
 
 namespace TodoList.Services.Models.Task
 {
+    using TodoListApp.WebApi.Models.Enum;
+
     /// <summary>
     /// Updates Task Model.
     /// </summary>
@@ -12,7 +14,7 @@ namespace TodoList.Services.Models.Task
         /// <summary>
         /// Gets or sets the title of the task.
         /// </summary>
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets a detailed description of the task.
@@ -25,15 +27,15 @@ namespace TodoList.Services.Models.Task
         public DateTime DueDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the current status of the task, represented as a <see cref="TaskStatus"/> enum value.
+        /// Gets or sets the current status of the task, represented as a <see cref="TaskStatusType"/> enum value.
         /// </summary>
-        public TaskStatus TaskStatus { get; set; }
+        public TaskStatusType Status { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user to whom the task is assigned.
         /// This property acts as a foreign key referencing the UserEntity.
         /// </summary>
-        public int TaskAssigneeId { get; set; }
+        public int Assignee { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user to whom the task is assigned.
