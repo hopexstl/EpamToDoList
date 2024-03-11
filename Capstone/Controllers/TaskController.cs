@@ -37,7 +37,7 @@ namespace TodoList.WebApi.Controllers
         /// <param name="model">model.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost(nameof(GetTasksByUserId))]
-        public async Task<ActionResult<List<GetTasksModel>>> GetTasksByUserId([FromBody] FilterUserTaskModel model)
+        public async Task<ActionResult<List<TodoTask>>> GetTasksByUserId([FromBody] FilterUserTaskModel model)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -56,7 +56,7 @@ namespace TodoList.WebApi.Controllers
         /// <param name="todoListId">Item Id Of TodoList.</param>
         /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
         [HttpGet("GetTasksByTodoListId/{todoListId}")]
-        public async Task<ActionResult<List<GetTasksModel>>> GetTasksByTodoListId(int todoListId)
+        public async Task<ActionResult<List<TodoTask>>> GetTasksByTodoListId(int todoListId)
         {
             var todoListItems = await this.taskService.GetTasksByTodoListId(todoListId);
             return this.Ok(todoListItems);
@@ -68,9 +68,9 @@ namespace TodoList.WebApi.Controllers
         /// <param name="itemId">Item Id Of TodoList.</param>
         /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
         [HttpGet("GetTasksById/{itemId}")]
-        public async Task<ActionResult<GetTaskByIdModel>> GetTasksById(int itemId)
+        public async Task<ActionResult<TaskForCreate> GetTasksById(int itemId)
         {
-            var todoListItems = await this.taskService.GetTaskById(itemId);
+            var todoListItems = await this.taskService.GetTasksByTodoListId(itemId);
             return this.Ok(todoListItems);
         }
 
@@ -84,7 +84,7 @@ namespace TodoList.WebApi.Controllers
         /// indicating that the request has been successfully processed but there is no content to return.
         /// </returns>
         [HttpPost]
-        public async Task<IActionResult> CreateTask(AddTaskModel todo)
+        public async Task<IActionResult> CreateTask(TaskForCreate todo)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -131,7 +131,7 @@ namespace TodoList.WebApi.Controllers
         /// or NotFound if a TodoItem with the specified ID does not exist.
         /// </returns>
         [HttpPut("{itemId}")]
-        public async Task<IActionResult> UpdateTask(int itemId, [FromBody] AddTaskModel updatedItem)
+        public async Task<IActionResult> UpdateTask(int itemId, [FromBody] TaskForCreate updatedItem)
         {
             if (updatedItem == null)
             {

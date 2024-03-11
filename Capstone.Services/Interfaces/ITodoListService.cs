@@ -4,7 +4,7 @@
 
 namespace Capstone.Services.Interfaces
 {
-    using TodoList.Services.Models.TodoList;
+    using TodoList.Services.Models;
 
     /// <summary>
     /// Defines the contract for a service that manages todo list items.
@@ -44,6 +44,6 @@ namespace Capstone.Services.Interfaces
         /// </summary>
         /// <param name="userId">The ID of the todo item to be updated.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoList"/> instances.</returns>
-        Task<List<GetTodoList>> GetAllTodoListsByUserId(int userId);
+        Task<List<TodoList>> GetAllByUserId(int userId);
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="AddTaskModel.cs" company="PlaceholderCompany">
+﻿// <copyright file="UpdateTaskModel.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -7,24 +7,19 @@ namespace TodoList.Services.Models.Task
     using TodoListApp.WebApi.Models.Enum;
 
     /// <summary>
-    /// Represents a single to-do item with a title and a description.
+    /// Updates Task Model.
     /// </summary>
-    public class AddTaskModel
+    public class TaskForUpdate
     {
         /// <summary>
         /// Gets or sets the title of the task.
         /// </summary>
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets a detailed description of the task.
         /// </summary>
         public string? Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the date and time when the task was created.
-        /// </summary>
-        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the due date and time by which the task should be completed.
@@ -47,19 +42,5 @@ namespace TodoList.Services.Models.Task
         /// This property acts as a foreign key referencing the UserEntity.
         /// </summary>
         public int TodoListId { get; set; }
-
-        /// <summary>
-        /// Gets the identifier of the user who created the task.
-        /// </summary>
-        public int CreatedBy { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the identifier of the user who created the task.
-        /// </summary>
-        /// <param name="userId">The Todo List item to be created. This parameter is received from the request body.</param>
-        public void AddUserId(int userId)
-        {
-            this.CreatedBy = userId;
-        }
     }
 }

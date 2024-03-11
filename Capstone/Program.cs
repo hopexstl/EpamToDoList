@@ -73,7 +73,7 @@ builder.Services.AddDbContext<TodoListDbContext>(
     }).LogTo(Console.WriteLine, LogLevel.Information);
 }, ServiceLifetime.Transient);
 
-builder.Services.AddTransient<ITodoListService, TodoListDatabaseService>();
+builder.Services.AddTransient<ITodoListService, TodoListService>();
 
 builder.Services.AddTransient<IUserService, UserService>();
 

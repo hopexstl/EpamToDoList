@@ -10,15 +10,15 @@ namespace TodoListApp.Services.Db.Entity
     /// <summary>
     /// Represents a Todo List item entity in the database. Each instance corresponds to a row in the Todo List table.
     /// </summary>
-    public class TodoListModel
+    public class TodoListEntity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TodoListModel"/> class.
+        /// Initializes a new instance of the <see cref="TodoListEntity"/> class.
         /// </summary>
         /// <param name="id">TodoList Id.</param>
         /// <param name="title">TodoList Title.</param>
         /// <param name="description">TodoList Description.</param>
-        public TodoListModel(string? title, string? description)
+        public TodoListEntity(string? title, string? description)
         {
             this.Title = title;
             this.Description = description;
@@ -43,7 +43,7 @@ namespace TodoListApp.Services.Db.Entity
         /// <summary>
         /// Gets or sets the list of Tasks of the Todo List item. This field represents the task or item to be completed.
         /// </summary>
-        public ICollection<TaskModel>? Tasks { get; set; }
+        public ICollection<TaskEntity>? Tasks { get; set; }
 
         /// <summary>
         /// Updates TodoList instance.

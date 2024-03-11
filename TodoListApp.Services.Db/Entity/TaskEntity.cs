@@ -12,10 +12,10 @@ namespace TodoList.Services.Db.Entity
     /// <summary>
     /// Represents a Todo List item entity in the database. Each instance corresponds to a row in the Todo List table.
     /// </summary>
-    public class TaskModel
+    public class TaskEntity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskModel"/> class.
+        /// Initializes a new instance of the <see cref="TaskEntity"/> class.
         /// </summary>
         /// <param name="title">Title.</param>
         /// <param name="description">Description.</param>
@@ -24,7 +24,7 @@ namespace TodoList.Services.Db.Entity
         /// <param name="createdById">Created By Id.</param>
         /// <param name="taskAssigneeId">Task Assignee Id.</param>
         /// <param name="todoListId">TodoList Id.</param>
-        public TaskModel(string? title, string? description, DateTime dueDate, TaskStatusType taskStatus, int createdById, int taskAssigneeId, int todoListId)
+        public TaskEntity(string title, string? description, DateTime dueDate, TaskStatusType taskStatus, int createdById, int taskAssigneeId, int todoListId)
         {
             this.Title = title;
             this.Description = description;
@@ -76,7 +76,7 @@ namespace TodoList.Services.Db.Entity
         /// <summary>
         /// Gets or sets navigation property for the user who created the task.
         /// </summary>
-        public UserModel? CreatedBy { get; set; }
+        public UserEntity? CreatedBy { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user to whom the task is assigned.
@@ -88,7 +88,7 @@ namespace TodoList.Services.Db.Entity
         /// <summary>
         /// Gets or sets navigation property for the user to whom the task is assigned.
         /// </summary>
-        public UserModel? Assignee { get; set; }
+        public UserEntity? Assignee { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user to whom the task is assigned.
@@ -100,7 +100,7 @@ namespace TodoList.Services.Db.Entity
         /// <summary>
         /// Gets or sets navigation property for the user to whom the task is assigned.
         /// </summary>
-        public TodoListModel? TodoList { get; set; }
+        public TodoListEntity? TodoList { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskEntity"/> class.

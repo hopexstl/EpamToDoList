@@ -50,7 +50,7 @@ namespace TodoList.Services.Db.Services
 
             this.CreatePasswordHash(item.Password!, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var user = new UserModel(item.FirstName, item.LastName, item.Email, passwordHash, passwordSalt);
+            var user = new UserEntity(item.FirstName, item.LastName, item.Email, passwordHash, passwordSalt);
             await this.context!.Users!.AddAsync(user);
             await this.context.SaveChangesAsync();
         }
@@ -170,7 +170,7 @@ namespace TodoList.Services.Db.Services
         /// Asynchronously creates JwtToken for user.
         /// </summary>
         /// <param name="user">The unique user.</param>
-        private string CreateToken(UserModel user)
+        private string CreateToken(UserEntity user)
         {
             List<Claim> claim = new List<Claim>
             {

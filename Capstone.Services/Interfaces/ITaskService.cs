@@ -17,7 +17,7 @@ namespace TodoList.Services.Interfaces
         /// </summary>
         /// <param name="item">The task item to add. The item should contain all necessary information such as title and, optionally, a description.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains no return value.</returns>
-        Task AddTask(AddTaskModel item);
+        Task AddTask(TaskForCreate item);
 
         /// <summary>
         /// Removes a task item from the database.
@@ -38,7 +38,7 @@ namespace TodoList.Services.Interfaces
         /// Thrown when a task item with the specified ID is not found in the database.
         /// </exception>
         /// <returns>A task that represents the asynchronous operation. The task result contains no return value.</returns>
-        Task UpdateTask(int itemId, AddTaskModel item);
+        Task UpdateTask(int itemId, TaskForCreate item);
 
         /// <summary>
         /// Updates an existing task item in the database with new values.
@@ -54,23 +54,23 @@ namespace TodoList.Services.Interfaces
         /// <summary>
         /// Asynchronously retrieves all task lists by todolist Id.
         /// </summary>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="GetTasksModel"/> instances.</returns>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> instances.</returns>
         /// <param name="todoListId">The ID of the task item task to get.</param>
-        Task<List<GetTasksModel>> GetTasksByTodoListId(int todoListId);
+        Task<List<TodoTask>> GetTasksByTodoListId(int todoListId);
 
         /// <summary>
         /// Asynchronously retrieves all task lists by todolist Id.
         /// </summary>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="GetTasksModel"/> instances.</returns>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> instances.</returns>
         /// <param name="userId">The ID of the user for tasks to get.</param>
         /// <param name="model">The updated task item object containing the new values.</param>
-        Task<List<GetTasksModel>> GetTasksByUserId(int userId, FilterUserTaskModel model);
+        Task<List<TodoTask>> GetTasksByUserId(int userId, FilterUserTaskModel model);
 
         /// <summary>
         /// Asynchronously retrieves all task lists by todolist Id.
         /// </summary>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="GetTasksModel"/> instances.</returns>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> instances.</returns>
         /// <param name="itemId">The ID of the task item task to get.</param>
-        Task<GetTaskByIdModel> GetTaskById(int itemId);
+        Task<TaskForCreate> GetTaskById(int itemId);
     }
 }

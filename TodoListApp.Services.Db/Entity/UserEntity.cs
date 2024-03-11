@@ -7,17 +7,17 @@ namespace TodoList.Services.Db.Entity
     /// <summary>
     /// Represents a user within the application. This class can be expanded to include additional user-related properties such as name, email, etc.
     /// </summary>
-    public class UserModel
+    public class UserEntity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserModel"/> class.
+        /// Initializes a new instance of the <see cref="UserEntity"/> class.
         /// </summary>
         /// <param name="firstName">First Name.</param>
         /// <param name="lastName">Last Name.</param>
         /// <param name="email">Email.</param>
         /// <param name="passwordHash">Password Hash.</param>
         /// <param name="passwordSalt">Password Salt.</param>
-        public UserModel(string? firstName, string? lastName, string? email, byte[] passwordHash, byte[] passwordSalt)
+        public UserEntity(string? firstName, string? lastName, string? email, byte[] passwordHash, byte[] passwordSalt)
         {
             this.FirstName = firstName;
             this.LastName = lastName;

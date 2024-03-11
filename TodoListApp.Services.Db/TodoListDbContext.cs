@@ -27,26 +27,26 @@ namespace TodoListApp.Services.Db
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Todo List in the database.
         /// This property can be used to query and save instances of Todo List entities.
         /// </summary>
-        public DbSet<TodoListModel>? TodoList { get; set; }
+        public DbSet<TodoListEntity> TodoList { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Task in the database.
         /// This property can be used to query and save instances of Task entities.
         /// </summary>
-        public DbSet<TaskModel>? Tasks { get; set; }
+        public DbSet<TaskEntity> Tasks { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the User in the database.
         /// This property can be used to query and save instances of User entities.
         /// </summary>
-        public DbSet<UserModel>? Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<TaskModel>()
+            modelBuilder.Entity<TaskEntity>()
                         .HasOne(t => t.Assignee)
                         .WithMany()
                         .HasForeignKey(t => t.TaskAssigneeId)

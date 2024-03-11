@@ -8,7 +8,7 @@ namespace TodoList.WebApi.Controllers
     using Capstone.Services.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using TodoList.Services.Models.TodoList;
+    using TodoList.Services.Models;
 
     /// <summary>
     /// Controller for managing todo items.

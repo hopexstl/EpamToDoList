@@ -9,16 +9,16 @@ namespace TodoList.Services.Models.Task
     /// <summary>
     /// Represents a single to-do item with a title and a description.
     /// </summary>
-    public class GetTasksModel
+    public class TodoTask
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetTasksModel"/> class.
+        /// Initializes a new instance of the <see cref="TodoTask"/> class.
         /// </summary>
         /// <param name="title">Title.</param>
         /// <param name="createdDate">Created Date.</param>
         /// <param name="dueDate">Due Date.</param>
         /// <param name="status">Task Status.</param>
-        public GetTasksModel(string title, DateTime createdDate, DateTime dueDate, TaskStatusType status)
+        public TodoTask(string title, DateTime createdDate, DateTime dueDate, TaskStatusType status)
         {
             this.Title = title;
             this.CreatedDate = createdDate;

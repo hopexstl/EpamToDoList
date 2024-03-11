@@ -6,6 +6,7 @@ namespace TodoList.Services.Db.Services
 {
     using Microsoft.EntityFrameworkCore;
     using TodoList.Services.Db.Entity;
+    using TodoList.Services.Db.Exceptions;
     using TodoList.Services.Interfaces;
     using TodoList.Services.Models.Task;
     using TodoListApp.Services.Db;
@@ -35,17 +36,17 @@ namespace TodoList.Services.Db.Services
         /// This method fetches todo list entities from the database, converts them to the TodoList model,
         /// and returns a list of these models. Each model includes the Id and Title of the todo list.
         /// </remarks>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="GetTasksModel"/> models.</returns>
-        public async Task<GetTaskByIdModel> GetTaskById(int itemId)
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> models.</returns>
+        public async Task<TaskForCreate> GetTaskById(int itemId)
         {
             var task = await this.context!.Tasks!
                 .Where(x => x.Id == itemId)
-                .Select(x => new GetTaskByIdModel(x.Title!, x.Description, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .Select(x => new TaskForCreate(x.Title!, x.Description, x.CreatedDate, x.DueDate, x.TaskStatus))
                 .FirstOrDefaultAsync();
 
             if (task == null)
             {
-                throw new ArgumentNullException();
+                throw new KeyNotFoundException();
             }
 
             return task;
@@ -60,22 +61,30 @@ namespace TodoList.Services.Db.Services
         /// This method fetches todo list entities from the database, converts them to the TodoList model,
         /// and returns a list of these models. Each model includes the Id and Title of the todo list.
         /// </remarks>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="GetTasksModel"/> models.</returns>
-        public async Task<List<GetTasksModel>> GetTasksByUserId(int userId, FilterUserTaskModel model)
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> models.</returns>
+        public async Task<List<TodoTask>> GetTasksByUserId(int userId, FilterUserTaskModel filter)
         {
-            var task = await this.context!.Tasks!
-                .Where(x => x.TaskAssigneeId == userId)
-                .Where(x => string.IsNullOrWhiteSpace(model.Title) || x.Title!.ToLower().Contains(model.Title.ToLower()))
-                .Where(x => !model.Status.HasValue || x.TaskStatus.Equals((TaskStatusType)model.Status.Value))
-                .Select(x => new GetTasksModel(x.Title!, x.CreatedDate, x.DueDate, x.TaskStatus))
-                .ToListAsync();
-
-            if (task == null)
+            if (filter is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(filter));
             }
 
-            return task;
+            var query = context.Tasks.Where(x => x.TaskAssigneeId == userId);
+
+            if (filter.Status.HasValue)
+            {
+                query = query.Where(x => x.TaskStatus == (TaskStatusType)filter.Status.Value);
+            }
+
+            if (!string.IsNullOrEmpty(filter.Title))
+            {
+                query = query.Where(x => x.Title.Contains(filter.Title));
+            }
+
+            var tasks = await query.Select(x => new TodoTask(x.Title, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .ToListAsync();
+
+            return tasks;
         }
 
         /// <summary>
@@ -86,12 +95,12 @@ namespace TodoList.Services.Db.Services
         /// This method fetches todo list entities from the database, converts them to the TodoList model,
         /// and returns a list of these models. Each model includes the Id and Title of the todo list.
         /// </remarks>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="GetTasksModel"/> models.</returns>
-        public async Task<List<GetTasksModel>> GetTasksByTodoListId(int todoListId)
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> models.</returns>
+        public async Task<List<TodoTask>> GetTasksByTodoListId(int todoListId)
         {
             var task = await this.context!.Tasks!
                 .Where(x => x.TodoListId == todoListId)
-                .Select(x => new GetTasksModel(x.Title!, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .Select(x => new TodoTask(x.Title!, x.CreatedDate, x.DueDate, x.TaskStatus))
                 .ToListAsync();
 
             if (task == null)
@@ -103,16 +112,16 @@ namespace TodoList.Services.Db.Services
         }
 
         /// <inheritdoc/>
-        public async Task AddTask(AddTaskModel item)
+        public async Task AddTask(TaskForCreate item)
         {
-            var taskModel = new TaskModel(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
+            var taskModel = new TaskEntity(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
 
             await this.context!.Tasks!.AddAsync(taskModel);
             await this.context.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
-        public async Task UpdateTask(int itemId, AddTaskModel item)
+        public async Task UpdateTask(int itemId, TaskForCreate item)
         {
             var task = await this.context!.Tasks!.FindAsync(itemId);
 

@@ -1,4 +1,4 @@
-﻿// <copyright file="GetTaskByIdModel.cs" company="PlaceholderCompany">
+﻿// <copyright file="AddTaskModel.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -9,24 +9,23 @@ namespace TodoList.Services.Models.Task
     /// <summary>
     /// Represents a single to-do item with a title and a description.
     /// </summary>
-    public class GetTaskByIdModel
+    public class TaskForCreate
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetTaskByIdModel"/> class.
+        /// Initializes a new instance of the <see cref="TaskForCreate"/> class.
         /// </summary>
         /// <param name="title">Title.</param>
         /// <param name="description">Description.</param>
-        /// <param name="createdDate">Created Date.</param>
         /// <param name="dueDate">Due Date.</param>
         /// <param name="status">Task Status.</param>
-        public GetTaskByIdModel(string title, string? description, DateTime createdDate, DateTime dueDate, TaskStatusType status)
+        /// <param name="createdDate">Create Date.</param>
+        public TaskForCreate(string title, string? description, DateTime createdDate, DateTime dueDate, TaskStatusType status)
         {
             this.Title = title;
             this.Description = description;
             this.CreatedDate = createdDate;
             this.DueDate = dueDate;
             this.Status = status;
-            this.IsOverdue = dueDate > DateTime.Now ? true : false;
         }
 
         /// <summary>
@@ -55,13 +54,25 @@ namespace TodoList.Services.Models.Task
         public TaskStatusType Status { get; set; }
 
         /// <summary>
-        /// Gets or sets a assignee email of the task.
+        /// Gets or sets the identifier of the user to whom the task is assigned.
+        /// This property acts as a foreign key referencing the UserEntity.
         /// </summary>
-        public string? AssigneeEmail { get; set; }
+        public int Assignee { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether task is overdue.
+        /// Gets or sets the identifier of the user to whom the task is assigned.
+        /// This property acts as a foreign key referencing the UserEntity.
         /// </summary>
-        public bool IsOverdue { get; set; }
+        public int TodoListId { get; set; }
+
+        /// <summary>
+        /// Gets the identifier of the user who created the task.
+        /// </summary>
+        public int CreatedBy { get; private set; }
+
+        public void AddUserId(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
