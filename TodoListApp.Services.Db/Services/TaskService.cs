@@ -5,6 +5,7 @@
 namespace TodoList.Services.Db.Services
 {
     using Microsoft.EntityFrameworkCore;
+    using System.Linq;
     using TodoList.Services.Db.Entity;
     using TodoList.Services.Db.Exceptions;
     using TodoList.Services.Interfaces;
@@ -41,7 +42,7 @@ namespace TodoList.Services.Db.Services
         {
             var task = await this.context!.Tasks!
                 .Where(x => x.Id == itemId)
-                .Select(x => new TaskForCreate(x.Title!, x.Description, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .Select(x => new TaskForCreate(x.Title!, x.Description, x.CreatedDate, x.DueDate, x.TaskStatus, x.TaskAssigneeId, x.CreatedById, x.TodoListId))
                 .FirstOrDefaultAsync();
 
             if (task == null)
@@ -56,7 +57,7 @@ namespace TodoList.Services.Db.Services
         /// Asynchronously retrieves all todo lists from the database.
         /// </summary>
         /// <param name="userId">The unique identifier of the task by todolist id.</param>
-        /// <param name="model">the unique model filtering to filter tasks.</param>
+        /// <param name="filter">the unique model filtering to filter tasks.</param>
         /// <remarks>
         /// This method fetches todo list entities from the database, converts them to the TodoList model,
         /// and returns a list of these models. Each model includes the Id and Title of the todo list.
@@ -69,7 +70,7 @@ namespace TodoList.Services.Db.Services
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            var query = context.Tasks.Where(x => x.TaskAssigneeId == userId);
+            var query = this.context.Tasks.Where(x => x.TaskAssigneeId == userId);
 
             if (filter.Status.HasValue)
             {
@@ -114,9 +115,9 @@ namespace TodoList.Services.Db.Services
         /// <inheritdoc/>
         public async Task AddTask(TaskForCreate item)
         {
-            var taskModel = new TaskEntity(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
+            var TaskEntity = new TaskEntity(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
 
-            await this.context!.Tasks!.AddAsync(taskModel);
+            await this.context!.Tasks!.AddAsync(TaskEntity);
             await this.context.SaveChangesAsync();
         }
 

@@ -1,4 +1,4 @@
-﻿// <copyright file="AddTaskModel.cs" company="PlaceholderCompany">
+﻿// <copyright file="TaskForCreate.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -19,13 +19,19 @@ namespace TodoList.Services.Models.Task
         /// <param name="dueDate">Due Date.</param>
         /// <param name="status">Task Status.</param>
         /// <param name="createdDate">Create Date.</param>
-        public TaskForCreate(string title, string? description, DateTime createdDate, DateTime dueDate, TaskStatusType status)
+        /// <param name="assignee">Assignee.</param>
+        /// <param name="todoListId">Todo List Id.</param>
+        /// <param name="createdBy">Created By.</param>
+        public TaskForCreate(string title, string? description, DateTime createdDate, DateTime dueDate, TaskStatusType status, int assignee, int todoListId, int createdBy)
         {
             this.Title = title;
             this.Description = description;
             this.CreatedDate = createdDate;
             this.DueDate = dueDate;
             this.Status = status;
+            this.Assignee = assignee;
+            this.TodoListId = todoListId;
+            this.CreatedBy = createdBy;
         }
 
         /// <summary>
@@ -70,6 +76,11 @@ namespace TodoList.Services.Models.Task
         /// </summary>
         public int CreatedBy { get; private set; }
 
+        /// <summary>
+        /// Adds a user ID to the current context or collection. 
+        /// </summary>
+        /// <param name="v">The user ID to add. This should be a positive integer representing a unique identifier for a user.</param>
+        /// <exception cref="NotImplementedException">Thrown when the method is not yet implemented.</exception>
         public void AddUserId(int v)
         {
             throw new NotImplementedException();

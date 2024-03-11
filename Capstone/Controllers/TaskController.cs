@@ -68,9 +68,9 @@ namespace TodoList.WebApi.Controllers
         /// <param name="itemId">Item Id Of TodoList.</param>
         /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
         [HttpGet("GetTasksById/{itemId}")]
-        public async Task<ActionResult<TaskForCreate> GetTasksById(int itemId)
+        public async Task<ActionResult<TaskForCreate>> GetTasksById(int itemId)
         {
-            var todoListItems = await this.taskService.GetTasksByTodoListId(itemId);
+            var todoListItems = await this.taskService.GetTaskById(itemId);
             return this.Ok(todoListItems);
         }
 

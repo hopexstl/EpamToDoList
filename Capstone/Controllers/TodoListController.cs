@@ -43,7 +43,7 @@ namespace TodoList.WebApi.Controllers
                 throw new NullReferenceException();
             }
 
-            var todoListItems = await this.todoService.GetAllTodoListsByUserId(int.Parse(userId));
+            var todoListItems = await this.todoService.GetAllByUserId(int.Parse(userId));
             return this.Ok(todoListItems);
         }
 
