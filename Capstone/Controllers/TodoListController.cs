@@ -30,21 +30,36 @@ namespace TodoList.WebApi.Controllers
         }
 
         /// <summary>
-        /// Retrieves all todo lists from the service.
+        /// Retrieves all todo lists from the service for the authenticated user.
         /// </summary>
-        /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
+        /// <returns>A list of todo lists for the authenticated user. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
         [HttpGet]
         public async Task<ActionResult<List<TodoList>>> GetAllTodoListsByUserId()
         {
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            // Try to retrieve the user ID from the User claims
+            var userIdClaim = this.User.FindFirst(ClaimTypes.NameIdentifier);
 
-            if (userId == null)
+            // Check if the user ID claim is present
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
             {
-                throw new NullReferenceException();
+                // If the user ID claim is not found or cannot be parsed to an integer, return an Unauthorized or BadRequest result.
+                return this.Unauthorized("User ID claim is missing or invalid.");
             }
 
-            var todoListItems = await this.todoService.GetAllByUserId(int.Parse(userId));
-            return this.Ok(todoListItems);
+            try
+            {
+                var todoListItems = await this.todoService.GetAllByUserId(userId);
+                return Ok(todoListItems);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details
+                // Consider logging the exception details here for debugging purposes.
+                // For example: _logger.LogError(ex, "An error occurred while retrieving todo lists for user ID {UserId}.", userId);
+
+                // Return a generic error response
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ namespace TodoList.Services.Db.Services
     using System.Linq;
     using TodoList.Services.Db.Entity;
     using TodoList.Services.Db.Exceptions;
+    using TodoList.Services.Db.Mappings;
     using TodoList.Services.Interfaces;
     using TodoList.Services.Models.Task;
     using TodoListApp.Services.Db;
@@ -115,9 +116,9 @@ namespace TodoList.Services.Db.Services
         /// <inheritdoc/>
         public async Task AddTask(TaskForCreate item)
         {
-            var TaskEntity = new TaskEntity(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
+            var taskEntity = item.ToEntity();
 
-            await this.context!.Tasks!.AddAsync(TaskEntity);
+            await this.context!.Tasks!.AddAsync(taskEntity);
             await this.context.SaveChangesAsync();
         }
 
