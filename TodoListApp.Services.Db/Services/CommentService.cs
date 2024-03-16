@@ -60,5 +60,58 @@ namespace TodoList.Services.Db.Services
 
             await this.context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Asynchronously deletes a comment by its unique identifier.
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous delete operation. The task completion signifies that the comment
+        /// has been deleted from the database.
+        /// </returns>
+        /// <param name="commentId">The unique identifier of the comment to delete.</param>
+        /// <remarks>
+        /// This method searches for a comment by its ID in the database. If the comment is found, it is removed from the database.
+        /// If the comment with the specified ID does not exist, a <see cref="KeyNotFoundException"/> is thrown.
+        /// </remarks>
+        /// <exception cref="KeyNotFoundException">Thrown when a comment with the specified ID cannot be found in the database.</exception>
+        public async Task DeleteCommentAsync(int commentId)
+        {
+            var comment = await this.context.Comments.FindAsync(commentId);
+            if (comment != null)
+            {
+                this.context.Comments.Remove(comment);
+
+                await this.context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new KeyNotFoundException("Comment not found");
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously updates an existing comment with new information.
+        /// </summary>
+        /// <param name="id">The unique identifier of the comment to update.</param>
+        /// <param name="commentUpdateModel">The model containing the updated information for the comment.</param>
+        /// <remarks>
+        /// This method first attempts to find a comment by its ID. If found, it updates the comment's properties with the values from the <paramref name="commentUpdateModel"/>.
+        /// The changes are then saved to the database.
+        /// If no comment with the specified ID exists, a <see cref="KeyNotFoundException"/> is thrown.
+        /// </remarks>
+        /// <exception cref="KeyNotFoundException">Thrown when no comment with the specified ID can be found.</exception>
+        /// <returns>A task that represents the asynchronous operation, containing no return value.</returns>
+        public async Task UpdateCommentAsync(int id, CommentForUpdate commentUpdateModel)
+        {
+            var comment = await this.context.Comments.FindAsync(id);
+            if (comment == null)
+            {
+                throw new KeyNotFoundException("Comment not found");
+            }
+
+            comment.Content = commentUpdateModel.Content;
+
+            await this.context.SaveChangesAsync();
+        }
     }
 }

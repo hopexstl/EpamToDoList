@@ -28,5 +28,26 @@ namespace TodoList.Services.Interfaces
         /// <exception cref="ArgumentNullException">Thrown if the <paramref name="comment"/> is null.</exception>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task AddCommentAsync(CommentForCreate comment);
+
+        /// <summary>
+        /// Asynchronously deletes a comment identified by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the comment to be deleted.</param>
+        /// <returns>A task representing the asynchronous operation of deleting the comment.</returns>
+        /// <remarks>
+        /// This method attempts to delete the comment corresponding to the provided ID. If the comment does not exist,
+        /// the implementation may throw a <see cref="KeyNotFoundException"/>.
+        /// </remarks>
+        /// <exception cref="KeyNotFoundException">Thrown when a comment with the specified ID is not found.</exception>
+        Task DeleteCommentAsync(int id);
+
+        /// <summary>
+        /// Asynchronously updates an existing comment with new information.
+        /// </summary>
+        /// <param name="id">The unique identifier of the comment to be updated.</param>
+        /// <param name="comment">The model containing the updated information for the comment.</param>
+        /// <returns>A task that represents the asynchronous update operation.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown when no comment with the specified ID exists.</exception>
+        Task UpdateCommentAsync(int id, CommentForUpdate comment);
     }
 }
