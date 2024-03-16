@@ -12,8 +12,8 @@ using TodoListApp.Services.Db;
 namespace TodoList.Services.Db.Migrations
 {
     [DbContext(typeof(TodoListDbContext))]
-    [Migration("20240311172153_Test")]
-    partial class Test
+    [Migration("20240316150756_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,6 +95,26 @@ namespace TodoList.Services.Db.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TodoList.Services.Models.Comments.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListEntity", b =>

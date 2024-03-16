@@ -1,14 +1,46 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿// <copyright file="20240316150756_Init.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace TodoList.Services.Db.Migrations
 {
-    public partial class Test : Migration
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
+    /// <summary>
+    /// Initial migration to create the database schema.
+    /// </summary>
+    /// <remarks>
+    /// This migration creates the initial set of tables for the application, including 'Comments', 'TodoList', 'Users', and 'Tasks'.
+    /// Each table is defined with its respective columns and constraints. Relationships between tables are also established through foreign keys.
+    /// </remarks>
+    public partial class Init : Migration
     {
+        /// <summary>
+        /// Builds the initial database schema by creating tables and defining relationships.
+        /// </summary>
+        /// <param name="migrationBuilder">The migrationBuilder is used to define operations for transforming the database schema.</param>
+        /// <remarks>
+        /// The 'Up' method is called when the migration is applied and is responsible for creating the 'Comments', 'TodoList', 'Users', and 'Tasks' tables.
+        /// </remarks>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaskId = table.Column<int>(type: "int", nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "TodoList",
                 columns: table => new
@@ -16,7 +48,7 @@ namespace TodoList.Services.Db.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -33,7 +65,7 @@ namespace TodoList.Services.Db.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -53,7 +85,7 @@ namespace TodoList.Services.Db.Migrations
                     TaskStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedById = table.Column<int>(type: "int", nullable: false),
                     TaskAssigneeId = table.Column<int>(type: "int", nullable: false),
-                    TodoListId = table.Column<int>(type: "int", nullable: false)
+                    TodoListId = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -93,8 +125,18 @@ namespace TodoList.Services.Db.Migrations
                 column: "TodoListId");
         }
 
+        /// <summary>
+        /// Reverts the changes made in the 'Up' method by dropping the created tables.
+        /// </summary>
+        /// <param name="migrationBuilder">The migrationBuilder is used to define operations for transforming the database schema.</param>
+        /// <remarks>
+        /// The 'Down' method is called when the migration is reverted. It is responsible for dropping the 'Comments', 'TodoList', 'Users', and 'Tasks' tables.
+        /// </remarks>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Comments");
+
             migrationBuilder.DropTable(
                 name: "Tasks");
 

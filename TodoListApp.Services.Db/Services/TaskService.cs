@@ -4,8 +4,8 @@
 
 namespace TodoList.Services.Db.Services
 {
-    using Microsoft.EntityFrameworkCore;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
     using TodoList.Services.Db.Entity;
     using TodoList.Services.Db.Exceptions;
     using TodoList.Services.Db.Mappings;

@@ -77,7 +77,7 @@ namespace TodoList.Services.Models.Task
         public int CreatedBy { get; private set; }
 
         /// <summary>
-        /// Adds a user ID to the current context or collection. 
+        /// Adds a user ID to the current context or collection.
         /// </summary>
         /// <param name="v">The user ID to add. This should be a positive integer representing a unique identifier for a user.</param>
         /// <exception cref="NotImplementedException">Thrown when the method is not yet implemented.</exception>

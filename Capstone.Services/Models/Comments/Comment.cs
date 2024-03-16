@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace TodoList.Services.Models
+namespace TodoList.Services.Models.Comments
 {
     using System;
     using System.Collections.Generic;

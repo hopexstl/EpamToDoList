@@ -36,29 +36,21 @@ namespace TodoList.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<TodoList>>> GetAllTodoListsByUserId()
         {
-            // Try to retrieve the user ID from the User claims
             var userIdClaim = this.User.FindFirst(ClaimTypes.NameIdentifier);
 
-            // Check if the user ID claim is present
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
             {
-                // If the user ID claim is not found or cannot be parsed to an integer, return an Unauthorized or BadRequest result.
                 return this.Unauthorized("User ID claim is missing or invalid.");
             }
 
             try
             {
                 var todoListItems = await this.todoService.GetAllByUserId(userId);
-                return Ok(todoListItems);
+                return this.Ok(todoListItems);
             }
             catch (Exception ex)
             {
-                // Log the exception details
-                // Consider logging the exception details here for debugging purposes.
-                // For example: _logger.LogError(ex, "An error occurred while retrieving todo lists for user ID {UserId}.", userId);
-
-                // Return a generic error response
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
 

@@ -6,7 +6,7 @@ namespace TodoListApp.Services.Db
 {
     using Microsoft.EntityFrameworkCore;
     using TodoList.Services.Db.Entity;
-    using TodoList.Services.Models;
+    using TodoList.Services.Models.Comments;
     using TodoListApp.Services.Db.Entity;
 
     /// <summary>
@@ -23,7 +23,6 @@ namespace TodoListApp.Services.Db
             : base(options)
         {
         }
-
 
         public DbSet<Comment> Comments { get; set; }
 
