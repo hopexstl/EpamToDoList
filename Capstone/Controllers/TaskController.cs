@@ -75,6 +75,40 @@ namespace TodoList.WebApi.Controllers
         }
 
         /// <summary>
+        /// Searches for tasks that contain the specified text in their title.
+        /// </summary>
+        /// <remarks>
+        /// This method searches for tasks belonging to the currently authenticated user
+        /// where the task title contains the provided <paramref name="searchText"/>.
+        /// The search is case-insensitive and includes partial matches.
+        /// </remarks>
+        /// <param name="searchText">The text to search for in task titles.</param>
+        /// <returns>
+        /// A list of <see cref="TodoTask"/> objects that match the search criteria.
+        /// If the user is not authenticated, this method returns an Unauthorized result.
+        /// If the <paramref name="searchText"/> is null, empty, or consists only of white-space characters,
+        /// this method returns a BadRequest result.
+        /// </returns>
+        [HttpGet("SearchByTitle")]
+        public async Task<ActionResult<List<TodoTask>>> SearchTasksByTitle(string searchText)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+            {
+                return this.Unauthorized();
+            }
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                return this.BadRequest("Search text cannot be empty.");
+            }
+
+            var tasks = await this.taskService.GetTasksByTitle(int.Parse(userId), searchText);
+            return this.Ok(tasks);
+        }
+
+        /// <summary>
         /// Creates a new Todo List item.
         /// </summary>
         /// <param name="todo">The Todo List item to be created. This parameter is received from the request body.</param>

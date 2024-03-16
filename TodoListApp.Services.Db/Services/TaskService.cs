@@ -113,11 +113,27 @@ namespace TodoList.Services.Db.Services
         }
 
         /// <inheritdoc/>
+        public async Task<List<TodoTask>> GetTasksByTitle(int userId, string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                throw new ArgumentException("Title cannot be null or whitespace.", nameof(title));
+            }
+
+            var tasks = await this.context.Tasks
+                .Where(x => x.TaskAssigneeId == userId && EF.Functions.Like(x.Title, $"%{title}%"))
+                .Select(x => new TodoTask(x.Title, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .ToListAsync();
+
+            return tasks;
+        }
+
+        /// <inheritdoc/>
         public async Task AddTask(TaskForCreate item)
         {
-            var TaskEntity = new TaskEntity(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
+            var taskEntity = new TaskEntity(item.Title, item.Description, item.DueDate, item.Status, item.CreatedBy, item.Assignee, item.TodoListId);
 
-            await this.context!.Tasks!.AddAsync(TaskEntity);
+            await this.context!.Tasks!.AddAsync(taskEntity);
             await this.context.SaveChangesAsync();
         }
 

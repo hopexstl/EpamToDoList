@@ -6,6 +6,7 @@ namespace TodoListApp.Services.Db
 {
     using Microsoft.EntityFrameworkCore;
     using TodoList.Services.Db.Entity;
+    using TodoList.Services.Models;
     using TodoListApp.Services.Db.Entity;
 
     /// <summary>
@@ -22,6 +23,9 @@ namespace TodoListApp.Services.Db
             : base(options)
         {
         }
+
+
+        public DbSet<Comment> Comments { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Todo List in the database.

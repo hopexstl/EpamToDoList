@@ -72,5 +72,13 @@ namespace TodoList.Services.Interfaces
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> instances.</returns>
         /// <param name="itemId">The ID of the task item task to get.</param>
         Task<TaskForCreate> GetTaskById(int itemId);
+
+        /// <summary>
+        /// Retrieves tasks for a specific user where the task title contains the specified search text.
+        /// </summary>
+        /// <param name="userId">The ID of the user whose tasks are to be retrieved.</param>
+        /// <param name="title">The text to search for within the task titles.</param>
+        /// <returns>A list of tasks that match the search criteria.</returns>
+        Task<List<TodoTask>> GetTasksByTitle(int userId, string title);
     }
 }
