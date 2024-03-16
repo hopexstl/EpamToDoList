@@ -83,7 +83,10 @@ namespace TodoList.Services.Models.Task
         /// <exception cref="NotImplementedException">Thrown when the method is not yet implemented.</exception>
         public void AddUserId(int v)
         {
-            throw new NotImplementedException();
+            if (v <= 0)
+            {
+                throw new ArgumentException("User ID must be a positive integer", nameof(v));
+            }
         }
     }
 }

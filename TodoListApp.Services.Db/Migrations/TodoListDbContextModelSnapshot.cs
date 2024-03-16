@@ -22,7 +22,7 @@ namespace TodoList.Services.Db.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskModel", b =>
+            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace TodoList.Services.Db.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("TodoList.Services.Db.Entity.UserModel", b =>
+            modelBuilder.Entity("TodoList.Services.Db.Entity.UserEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +95,7 @@ namespace TodoList.Services.Db.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListModel", b =>
+            modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,21 +114,21 @@ namespace TodoList.Services.Db.Migrations
                     b.ToTable("TodoList");
                 });
 
-            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskModel", b =>
+            modelBuilder.Entity("TodoList.Services.Db.Entity.TaskEntity", b =>
                 {
-                    b.HasOne("TodoList.Services.Db.Entity.UserModel", "CreatedBy")
+                    b.HasOne("TodoList.Services.Db.Entity.UserEntity", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TodoList.Services.Db.Entity.UserModel", "Assignee")
+                    b.HasOne("TodoList.Services.Db.Entity.UserEntity", "Assignee")
                         .WithMany()
                         .HasForeignKey("TaskAssigneeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TodoListApp.Services.Db.Entity.TodoListModel", "TodoList")
+                    b.HasOne("TodoListApp.Services.Db.Entity.TodoListEntity", "TodoList")
                         .WithMany("Tasks")
                         .HasForeignKey("TodoListId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -141,7 +141,7 @@ namespace TodoList.Services.Db.Migrations
                     b.Navigation("TodoList");
                 });
 
-            modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListModel", b =>
+            modelBuilder.Entity("TodoListApp.Services.Db.Entity.TodoListEntity", b =>
                 {
                     b.Navigation("Tasks");
                 });

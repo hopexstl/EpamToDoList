@@ -8,6 +8,7 @@ namespace TodoList.Services.Db.Services
     using System.Linq;
     using TodoList.Services.Db.Entity;
     using TodoList.Services.Db.Exceptions;
+    using TodoList.Services.Db.Mappings;
     using TodoList.Services.Interfaces;
     using TodoList.Services.Models.Task;
     using TodoListApp.Services.Db;
