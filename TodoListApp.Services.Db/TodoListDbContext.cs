@@ -24,7 +24,25 @@ namespace TodoListApp.Services.Db
         {
         }
 
-        public DbSet<Comment> Comments { get; set; }
+        /// <summary>
+        /// Gets or sets the collection of <see cref="TagEntity"/> objects.
+        /// </summary>
+        /// <value>
+        /// The DbSet of <see cref="TagEntity"/> represents the set of all Tags in the context of the current database session.
+        /// This property provides access to query and save instances of <see cref="TagEntity"/>
+        /// enabling CRUD operations on the tags within the database.
+        /// </value>
+        /// <remarks>
+        /// Tags are used to categorize or label tasks, making them easier to organize and search.
+        /// Each tag is associated with one or more tasks, depending on your application's relationships configuration.
+        /// </remarks>
+        public DbSet<TagEntity> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of comment entities. This property represents a database set that can be used to query and save instances of <see cref="CommentEntity"/>.
+        /// It provides access to all comments in the context of the current database session, allowing for operations like adding, removing, or querying comments.
+        /// </summary>
+        public DbSet<CommentEntity> Comments { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="DbSet{TEntity}"/> representing the Todo List in the database.

@@ -51,33 +51,6 @@ namespace TodoList.WebApi.Controllers
         }
 
         /// <summary>
-        /// Deletes a comment by its unique identifier.
-        /// </summary>
-        /// <param name="id">The unique identifier of the comment to be deleted.</param>
-        /// <remarks>
-        /// This method attempts to delete a comment from the database. If the comment with the specified ID exists, it will be removed.
-        /// If the comment cannot be found, the method responds with a 404 Not Found status code.
-        /// </remarks>
-        /// <returns>
-        /// A <see cref="NoContentResult"/> if the comment was successfully deleted, indicating that the server has successfully fulfilled
-        /// the request and that there is no additional content to send in the response payload body.
-        /// A <see cref="NotFoundResult"/> is returned if a comment with the specified ID was not found.
-        /// </returns>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComment(int id)
-        {
-            try
-            {
-                await this.commentService.DeleteCommentAsync(id);
-                return this.NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return this.NotFound();
-            }
-        }
-
-        /// <summary>
         /// Updates an existing comment with new information.
         /// </summary>
         /// <param name="id">The unique identifier of the comment to update.</param>
@@ -97,6 +70,33 @@ namespace TodoList.WebApi.Controllers
             try
             {
                 await this.commentService.UpdateCommentAsync(id, commentUpdateModel);
+                return this.NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return this.NotFound();
+            }
+        }
+
+        /// <summary>
+        /// Deletes a comment by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the comment to be deleted.</param>
+        /// <remarks>
+        /// This method attempts to delete a comment from the database. If the comment with the specified ID exists, it will be removed.
+        /// If the comment cannot be found, the method responds with a 404 Not Found status code.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="NoContentResult"/> if the comment was successfully deleted, indicating that the server has successfully fulfilled
+        /// the request and that there is no additional content to send in the response payload body.
+        /// A <see cref="NotFoundResult"/> is returned if a comment with the specified ID was not found.
+        /// </returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            try
+            {
+                await this.commentService.DeleteCommentAsync(id);
                 return this.NoContent();
             }
             catch (KeyNotFoundException)

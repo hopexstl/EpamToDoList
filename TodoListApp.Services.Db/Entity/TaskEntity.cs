@@ -1,4 +1,4 @@
-﻿// <copyright file="TaskModel.cs" company="PlaceholderCompany">
+﻿// <copyright file="TaskEntity.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -70,7 +70,7 @@ namespace TodoList.Services.Db.Entity
         /// <summary>
         /// Gets or sets the identifier of the user who created the task.
         /// </summary>
-        [ForeignKey("createdBy")]
+        [ForeignKey("CreatedBy")]
         public int CreatedById { get; set; }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿// <copyright file="TodoListModel.cs" company="PlaceholderCompany">
+﻿// <copyright file="TodoListEntity.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 

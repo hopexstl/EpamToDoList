@@ -32,6 +32,31 @@ namespace TodoList.WebApi.Controllers
         }
 
         /// <summary>
+        /// Retrieves all todo lists from the service.
+        /// </summary>
+        /// <param name="todoListId">Item Id Of TodoList.</param>
+        /// <param name="searchQuery">Search Query.</param>
+        /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
+        [HttpGet]
+        public async Task<ActionResult<List<TodoTask>>> GetTasksByTodoListId(int? todoListId, string? searchQuery)
+        {
+            var todoListItems = await this.taskService.GetTasksByTodoListId(todoListId, searchQuery);
+            return this.Ok(todoListItems);
+        }
+
+        /// <summary>
+        /// Retrieves all todo lists from the service.
+        /// </summary>
+        /// <param name="itemId">Item Id Of TodoList.</param>
+        /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
+        [HttpGet("{itemId}")]
+        public async Task<ActionResult<TaskForCreate>> GetTasksById(int itemId)
+        {
+            var todoListItems = await this.taskService.GetTaskById(itemId);
+            return this.Ok(todoListItems);
+        }
+
+        /// <summary>
         /// Retrieves all todo lists from the service by user id.
         /// </summary>
         /// <param name="model">model.</param>
@@ -48,64 +73,6 @@ namespace TodoList.WebApi.Controllers
 
             var todoListItems = await this.taskService.GetTasksByUserId(int.Parse(userId), model);
             return this.Ok(todoListItems);
-        }
-
-        /// <summary>
-        /// Retrieves all todo lists from the service.
-        /// </summary>
-        /// <param name="todoListId">Item Id Of TodoList.</param>
-        /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
-        [HttpGet("GetTasksByTodoListId/{todoListId}")]
-        public async Task<ActionResult<List<TodoTask>>> GetTasksByTodoListId(int todoListId)
-        {
-            var todoListItems = await this.taskService.GetTasksByTodoListId(todoListId);
-            return this.Ok(todoListItems);
-        }
-
-        /// <summary>
-        /// Retrieves all todo lists from the service.
-        /// </summary>
-        /// <param name="itemId">Item Id Of TodoList.</param>
-        /// <returns>A list of todo lists. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
-        [HttpGet("GetTasksById/{itemId}")]
-        public async Task<ActionResult<TaskForCreate>> GetTasksById(int itemId)
-        {
-            var todoListItems = await this.taskService.GetTaskById(itemId);
-            return this.Ok(todoListItems);
-        }
-
-        /// <summary>
-        /// Searches for tasks that contain the specified text in their title.
-        /// </summary>
-        /// <remarks>
-        /// This method searches for tasks belonging to the currently authenticated user
-        /// where the task title contains the provided <paramref name="searchText"/>.
-        /// The search is case-insensitive and includes partial matches.
-        /// </remarks>
-        /// <param name="searchText">The text to search for in task titles.</param>
-        /// <returns>
-        /// A list of <see cref="TodoTask"/> objects that match the search criteria.
-        /// If the user is not authenticated, this method returns an Unauthorized result.
-        /// If the <paramref name="searchText"/> is null, empty, or consists only of white-space characters,
-        /// this method returns a BadRequest result.
-        /// </returns>
-        [HttpGet("SearchByTitle")]
-        public async Task<ActionResult<List<TodoTask>>> SearchTasksByTitle(string searchText)
-        {
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (userId == null)
-            {
-                return this.Unauthorized();
-            }
-
-            if (string.IsNullOrWhiteSpace(searchText))
-            {
-                return this.BadRequest("Search text cannot be empty.");
-            }
-
-            var tasks = await this.taskService.GetTasksByTitle(int.Parse(userId), searchText);
-            return this.Ok(tasks);
         }
 
         /// <summary>
@@ -132,27 +99,6 @@ namespace TodoList.WebApi.Controllers
             await this.taskService.AddTask(todo);
 
             return this.NoContent();
-        }
-
-        /// <summary>
-        /// Deletes a TodoItem by its ID.
-        /// </summary>
-        /// <param name="itemId">The ID of the TodoItem to delete.</param>
-        /// <returns>
-        /// A NoContent result if the deletion is successful, or NotFound if a TodoItem with the specified ID does not exist.
-        /// </returns>
-        [HttpDelete("{itemId}")]
-        public async Task<IActionResult> DeleteTask(int itemId)
-        {
-            try
-            {
-                await this.taskService.RemoveTask(itemId);
-                return this.NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return this.NotFound(ex.Message);
-            }
         }
 
         /// <summary>
@@ -199,6 +145,27 @@ namespace TodoList.WebApi.Controllers
             {
                 await this.taskService.UpdateTaskStatus(itemId, taskStatus);
                 return this.Ok();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a TodoItem by its ID.
+        /// </summary>
+        /// <param name="itemId">The ID of the TodoItem to delete.</param>
+        /// <returns>
+        /// A NoContent result if the deletion is successful, or NotFound if a TodoItem with the specified ID does not exist.
+        /// </returns>
+        [HttpDelete("{itemId}")]
+        public async Task<IActionResult> DeleteTask(int itemId)
+        {
+            try
+            {
+                await this.taskService.RemoveTask(itemId);
+                return this.NoContent();
             }
             catch (KeyNotFoundException ex)
             {

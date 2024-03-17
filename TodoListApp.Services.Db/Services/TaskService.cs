@@ -93,24 +93,29 @@ namespace TodoList.Services.Db.Services
         /// Asynchronously retrieves all todo lists from the database.
         /// </summary>
         /// <param name="todoListId">The unique identifier of the task by todolist id.</param>
+        /// <param name="searchQuery">Search Query.</param>
         /// <remarks>
         /// This method fetches todo list entities from the database, converts them to the TodoList model,
         /// and returns a list of these models. Each model includes the Id and Title of the todo list.
         /// </remarks>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> models.</returns>
-        public async Task<List<TodoTask>> GetTasksByTodoListId(int todoListId)
+        public async Task<List<TodoTask>> GetTasksByTodoListId(int? todoListId, string? searchQuery)
         {
-            var task = await this.context!.Tasks!
-                .Where(x => x.TodoListId == todoListId)
-                .Select(x => new TodoTask(x.Title!, x.CreatedDate, x.DueDate, x.TaskStatus))
-                .ToListAsync();
+            var tasks = this.context.Tasks.AsQueryable();
 
-            if (task == null)
+            if (todoListId.HasValue)
             {
-                throw new ArgumentNullException();
+                tasks = tasks.Where(x => x.TodoListId == todoListId.Value);
             }
 
-            return task;
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                tasks = tasks.Where(x => x.Title.Contains(searchQuery));
+            }
+
+            return await tasks
+                .Select(x => new TodoTask(x.Title!, x.CreatedDate, x.DueDate, x.TaskStatus))
+                .ToListAsync();
         }
 
         /// <inheritdoc/>

@@ -9,6 +9,7 @@ namespace TodoList.Services.Db.Services
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using TodoList.Services.Db.Entity;
     using TodoList.Services.Interfaces;
     using TodoList.Services.Models.Comments;
     using TodoListApp.Services.Db;
@@ -50,7 +51,7 @@ namespace TodoList.Services.Db.Services
         /// <exception cref="ArgumentNullException">Thrown if the <paramref name="commentDto"/> is null.</exception>
         public async Task AddCommentAsync(CommentForCreate commentDto)
         {
-            var comment = new Comment
+            var comment = new CommentEntity
             {
                 Content = commentDto.Content,
                 TaskId = commentDto.TaskId,

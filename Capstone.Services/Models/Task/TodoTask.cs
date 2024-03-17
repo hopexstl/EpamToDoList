@@ -1,4 +1,4 @@
-﻿// <copyright file="GetTasksModel.cs" company="PlaceholderCompany">
+﻿// <copyright file="TodoTask.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 

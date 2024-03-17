@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoListApp.Services.Db;
 
@@ -11,9 +12,10 @@ using TodoListApp.Services.Db;
 namespace TodoList.Services.Db.Migrations
 {
     [DbContext(typeof(TodoListDbContext))]
-    partial class TodoListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317191611_UpdateCommentsRelationship")]
+    partial class UpdateCommentsRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,28 +44,6 @@ namespace TodoList.Services.Db.Migrations
                     b.HasIndex("TaskId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("TodoList.Services.Db.Entity.TagEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("TodoList.Services.Db.Entity.TaskEntity", b =>
@@ -159,17 +139,6 @@ namespace TodoList.Services.Db.Migrations
                 });
 
             modelBuilder.Entity("TodoList.Services.Db.Entity.CommentEntity", b =>
-                {
-                    b.HasOne("TodoList.Services.Db.Entity.TaskEntity", "Task")
-                        .WithMany()
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-                });
-
-            modelBuilder.Entity("TodoList.Services.Db.Entity.TagEntity", b =>
                 {
                     b.HasOne("TodoList.Services.Db.Entity.TaskEntity", "Task")
                         .WithMany()

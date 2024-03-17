@@ -56,7 +56,8 @@ namespace TodoList.Services.Interfaces
         /// </summary>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoTask"/> instances.</returns>
         /// <param name="todoListId">The ID of the task item task to get.</param>
-        Task<List<TodoTask>> GetTasksByTodoListId(int todoListId);
+        /// <param name="searchQuery">Search Query.</param>
+        Task<List<TodoTask>> GetTasksByTodoListId(int? todoListId, string? searchQuery);
 
         /// <summary>
         /// Asynchronously retrieves all task lists by todolist Id.
