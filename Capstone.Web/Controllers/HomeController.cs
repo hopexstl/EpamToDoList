@@ -7,30 +7,30 @@ namespace Capstone.Web.Controllers
     using System.Diagnostics;
     using Capstone.Web.Models;
     using Microsoft.AspNetCore.Mvc;
+    using TodoList.Services.WebApi.Services;
 
     /// <summary>
     /// Controller responsible for handling requests for the home page and related actions within the application.
     /// </summary>
     public class HomeController : Controller
     {
+        private readonly TodoListWebApiService todoListService;
         private readonly ILogger<HomeController> logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="logger">The logger used for logging information and errors.</param>
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, TodoListWebApiService todoListService)
         {
             this.logger = logger;
+            this.todoListService = todoListService;
         }
 
-        /// <summary>
-        /// Serves the main index view of the application.
-        /// </summary>
-        /// <returns>The index view.</returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+            var todoLists = await this.todoListService.GetTodoListsAsync();
+            return this.View(todoLists);
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace TodoListApp.Services.Db.Services
         /// This method fetches todo list entities from the database, converts them to the TodoList model,
         /// and returns a list of these models. Each model includes the Id and Title of the todo list.
         /// </remarks>
-        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="TodoList"/> models.</returns>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="Todo"/> models.</returns>
         public async Task<List<GetTodoList>> GetAllTodoListsByUserId(int userId)
         {
             var todoList = await this.context!.TodoList!
@@ -45,7 +45,7 @@ namespace TodoListApp.Services.Db.Services
         }
 
         /// <inheritdoc/>
-        public async Task AddTodoItem(TodoList item)
+        public async Task AddTodoItem(Todo item)
         {
             var toDoListItem = new TodoListModel(item.Title, item.Description);
 
@@ -81,7 +81,7 @@ namespace TodoListApp.Services.Db.Services
         /// <param name="updatedItem">The new values for the Todo item. The Id property is ignored if supplied.</param>
         /// <returns>A task that represents the asynchronous update operation.</returns>
         /// <exception cref="KeyNotFoundException">Thrown if a Todo item with the specified identifier is not found.</exception>
-        public async Task UpdateTodoItem(int itemId, TodoList updatedItem)
+        public async Task UpdateTodoItem(int itemId, Todo updatedItem)
         {
             var toDoListItem = await this.context!.TodoList!.FindAsync(itemId);
 

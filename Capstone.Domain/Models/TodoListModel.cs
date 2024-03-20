@@ -1,13 +1,13 @@
-﻿// <copyright file="TodoList.cs" company="PlaceholderCompany">
+﻿// <copyright file="TodoListModel.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace TodoList.Services.Models.TodoList
+namespace TodoList.WebApi.Models.Models
 {
     /// <summary>
     /// Represents a single to-do item with a title.
     /// </summary>
-    public class TodoList
+    public class TodoListModel
     {
         /// <summary>
         /// Gets or sets the title of the to-do item.
