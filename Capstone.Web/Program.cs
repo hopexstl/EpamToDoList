@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using TodoList.Services.WebApi.Services;
+using TodoList.WebApp.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,16 @@ builder.Services.AddHttpClient<TodoListWebApiService>(client =>
     client.BaseAddress = new Uri("https://localhost:44390");
 });
 
+builder.Services.AddHttpClient<AuthenticationService>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:44390");
+});
+
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
+
+app.UseMiddleware<AuthenticationMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

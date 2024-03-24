@@ -5,7 +5,9 @@
 namespace TodoList.Services.WebApi.Services
 {
     using System.Collections.Generic;
+    using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Text.Json;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
@@ -23,12 +25,12 @@ namespace TodoList.Services.WebApi.Services
             this.bearerToken = configuration["BearerToken"];
         }
 
-        public async Task<List<TodoListModel>> GetTodoListsAsync()
+        public async Task<List<TodoListModel>> GetTodoListsAsync(string token)
         {
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44390/api/Todolist");
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", this.bearerToken);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 using (var response = await this.httpClient.SendAsync(request))
                 {

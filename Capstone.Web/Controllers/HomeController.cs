@@ -4,6 +4,7 @@
 
 namespace Capstone.Web.Controllers
 {
+    using System;
     using System.Diagnostics;
     using Capstone.Web.Models;
     using Microsoft.AspNetCore.Mvc;
@@ -16,20 +17,24 @@ namespace Capstone.Web.Controllers
     {
         private readonly TodoListWebApiService todoListService;
         private readonly ILogger<HomeController> logger;
+        private readonly IHttpContextAccessor contextAccessor;
+        private readonly string token;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="logger">The logger used for logging information and errors.</param>
-        public HomeController(ILogger<HomeController> logger, TodoListWebApiService todoListService)
+        public HomeController(ILogger<HomeController> logger, TodoListWebApiService todoListService, IHttpContextAccessor contextAccessor)
         {
             this.logger = logger;
             this.todoListService = todoListService;
+            this.contextAccessor = contextAccessor;
+            this.token = this.contextAccessor.HttpContext.Request.Cookies["token"];
         }
 
         public async Task<IActionResult> Index()
         {
-            var todoLists = await this.todoListService.GetTodoListsAsync();
+            var todoLists = await this.todoListService.GetTodoListsAsync(this.token);
             return this.View(todoLists);
         }
 

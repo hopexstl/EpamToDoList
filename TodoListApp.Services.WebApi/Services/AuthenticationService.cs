@@ -14,6 +14,13 @@ namespace TodoList.Services.WebApi.Services
 
     public class AuthenticationService
     {
+        private readonly HttpClient httpClient;
+
+        public AuthenticationService(HttpClient httpClient)
+        {
+            this.httpClient = httpClient;
+        }
+
         public async Task<string> GetTokenAsync(string email, string password)
         {
             using (var client = new HttpClient())
@@ -24,12 +31,16 @@ namespace TodoList.Services.WebApi.Services
                 { "password", password },
             };
 
-                var response = await client.PostAsync("https://localhost:44390/api/User/Login", new FormUrlEncodedContent(loginData));
+                var jsonContent = JsonConvert.SerializeObject(loginData);
+
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44390/api/User/Login");
+                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                var response = await client.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseData = await response.Content.ReadAsStringAsync();
-                    var token = JsonConvert.DeserializeObject<TokenResponse>(responseData).AccessToken;
+                    var token = await response.Content.ReadAsStringAsync();
                     return token;
                 }
 

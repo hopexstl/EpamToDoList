@@ -107,31 +107,11 @@ namespace TodoList.WebApi.Controllers
             }
         }
 
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] Login model)
+        [HttpGet("check-token")]
+        [Authorize]
+        public IActionResult CheckToken()
         {
-            var token = this.GenerateToken(model.Email, model.Password);
-
-            if (token != null)
-            {
-                var tokenResponse = new TokenResponse
-                {
-                    AccessToken = token,
-                    TokenType = "Bearer",
-                    ExpiresIn = 36000000,
-                };
-
-                return this.Ok(tokenResponse);
-            }
-            else
-            {
-                return Unauthorized();
-            }
-        }
-
-        private string GenerateToken(string email, string password)
-        {
-            return "placeholder_token";
+            return this.Ok();
         }
     }
 }
