@@ -8,6 +8,7 @@ namespace TodoList.WebApi.Controllers
     using Microsoft.AspNetCore.Mvc;
     using TodoList.Services.Interfaces;
     using TodoList.Services.Models.User;
+    using TodoList.WebApi.Models.Models;
 
     /// <summary>
     /// Controller for handling user-related operations in the TodoList Web API.
@@ -104,6 +105,33 @@ namespace TodoList.WebApi.Controllers
             {
                 return this.NotFound(ex.Message);
             }
+        }
+
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody] Login model)
+        {
+            var token = this.GenerateToken(model.Email, model.Password);
+
+            if (token != null)
+            {
+                var tokenResponse = new TokenResponse
+                {
+                    AccessToken = token,
+                    TokenType = "Bearer",
+                    ExpiresIn = 36000000,
+                };
+
+                return this.Ok(tokenResponse);
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+
+        private string GenerateToken(string email, string password)
+        {
+            return "placeholder_token";
         }
     }
 }

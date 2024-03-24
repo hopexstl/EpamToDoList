@@ -13,7 +13,7 @@ namespace TodoList.WebApi.Controllers
     /// <summary>
     /// Controller for managing todo items.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/Todolist")]
     [ApiController]
     [Authorize]
     public class TodoListController : ControllerBase

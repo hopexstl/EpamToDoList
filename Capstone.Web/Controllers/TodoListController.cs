@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace TodoList.WebApp.Controllers
+namespace Capstone.Web.Controllers
 {
     using Capstone.Services.Interfaces;
     using Microsoft.AspNetCore.Mvc;
