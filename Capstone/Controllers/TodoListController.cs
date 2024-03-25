@@ -34,7 +34,7 @@ namespace TodoList.WebApi.Controllers
         /// </summary>
         /// <returns>A list of todo lists for the authenticated user. The response is wrapped in an ActionResult for HTTP status code handling.</returns>
         [HttpGet]
-        public async Task<ActionResult<List<Todo>>> GetAllTodoListsByUserId()
+        public async Task<ActionResult<List<TodoList>>> GetAllTodoListsByUserId()
         {
             var userIdClaim = this.User.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -64,7 +64,7 @@ namespace TodoList.WebApi.Controllers
         /// indicating that the request has been successfully processed but there is no content to return.
         /// </returns>
         [HttpPost]
-        public async Task<IActionResult> CreateTodoItem(Todo todo)
+        public async Task<IActionResult> CreateTodoItem(TodoList todo)
         {
             await this.todoService.AddTodoItem(todo);
             return this.NoContent();
@@ -101,7 +101,7 @@ namespace TodoList.WebApi.Controllers
         /// or NotFound if a TodoItem with the specified ID does not exist.
         /// </returns>
         [HttpPut("{itemId}")]
-        public async Task<IActionResult> UpdateTodoItem(int itemId, [FromBody] Todo updatedItem)
+        public async Task<IActionResult> UpdateTodoItem(int itemId, [FromBody] TodoList updatedItem)
         {
             if (updatedItem == null)
             {

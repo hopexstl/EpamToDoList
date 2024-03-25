@@ -85,7 +85,7 @@ namespace TodoListApp.Services.Db.Services
         /// <param name="updatedItem">The new values for the Todo item. The Id property is ignored if supplied.</param>
         /// <returns>A task that represents the asynchronous update operation.</returns>
         /// <exception cref="KeyNotFoundException">Thrown if a Todo item with the specified identifier is not found.</exception>
-        public async Task UpdateTodoItem(int itemId, Todo updatedItem)
+        public async Task UpdateTodoItem(int itemId, TodoList updatedItem)
         {
             var toDoListItem = await this.context!.TodoList!.FindAsync(itemId);
 
