@@ -8,6 +8,7 @@ namespace TodoList.WebApi.Controllers
     using Microsoft.AspNetCore.Mvc;
     using TodoList.Services.Interfaces;
     using TodoList.Services.Models.User;
+    using TodoList.WebApi.Models.Models;
 
     /// <summary>
     /// Controller for handling user-related operations in the TodoList Web API.
@@ -104,6 +105,13 @@ namespace TodoList.WebApi.Controllers
             {
                 return this.NotFound(ex.Message);
             }
+        }
+
+        [HttpGet("check-token")]
+        [Authorize]
+        public IActionResult CheckToken()
+        {
+            return this.Ok();
         }
     }
 }
